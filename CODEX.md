@@ -2704,6 +2704,8 @@ WHERE released_at IS NULL;
 
 **CURLoRA Unfolding** — SVD‑based initialization that compresses and inherits prior adapter identity into the new LoRA rank.
 
+**Harbinger** — Cold-start ritual that summons a base model, divines its anatomy from config.json architectures, and forges a Day-0 adapter with zero-U so the Daemon can speak before it remembers.
+
 **Adapter Activation (Atomic)** — Symlink swap of the active adapter link so inference hot‑loads the freshly trained identity in one step.
 
 **Active Adapter Link** — Filesystem pointer watched by serving; any swap triggers immediate adoption of the new adapter without downtime.
