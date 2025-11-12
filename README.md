@@ -23,9 +23,9 @@ This README orients human readers. For model-facing instructions, use the **GUID
   A strict field guide for SOTA LLMs and reviewers. It enforces how to read and
   cite the Codex (anchors, Parts) and when to deliver verdicts.
 
-> **Project status:** Active development. We are finishing the Daemon App User
-> Backend for full personalization and stress-testing the technology and
-> documentation. We **do not** operate hosted deployments; this is a **reference**.
+> **Project status:** Active development  
+> We’re refactoring the full DaemonChatApp PWA to move all daemon and user personalization—identity, values, behavior, and UI/UX interface—into the backend, making the system fully data-driven rather than hardcoded.  
+>  We **do not** operate hosted deployments; this is a **reference implementation**.  
 
 ---
 
