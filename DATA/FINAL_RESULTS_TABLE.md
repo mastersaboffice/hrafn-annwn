@@ -56,7 +56,7 @@
 
 ---
 
-## WEIGHT DIFFERENTIAL (REM CYCLES)
+## WEIGHT DIFFERENTIAL (REM CYCLES - DREAM FORGE)
 
 | Metric | Mean | SD | Range | N |
 |--------|------|----|-------|---|
@@ -189,7 +189,7 @@
 **All four validation components achieved pre-registered thresholds.**
 
 ✓ Emotion detection: 6.27× above chance (p < 0.0001)  
-✓ Memory classification: Follows DA algorithm (r = 0.847)  
+✓ Memory classification: Follows DA algorithm - Vault (r = 0.847)  
 ✓ Weight changes: Observable and correlated with affect  
 ✓ Moderation effect: 27.9% mismatch (d = 2.84)
 

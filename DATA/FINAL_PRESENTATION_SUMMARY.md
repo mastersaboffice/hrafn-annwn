@@ -283,11 +283,11 @@ BEHAVIORAL CHANGE (measured)
 - Linear regression: No drift
 - Statistical stability confirmed
 
-#### **REM Cycle Details**
+#### **REM Cycle Details (Dream Forge)**
 - Show weight delta distributions
 - Behavioral shift measurements per cycle
 - Catastrophic forgetting test results
-- CURLorA integrity validation
+- CURLoRA integrity validation
 
 #### **A/B Test Breakdown**
 - Scatter plots for both conditions

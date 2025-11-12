@@ -149,18 +149,18 @@ Accuracy across 10 consecutive time windows:
 - Memory class vs. Emotion intensity: r = 0.847, p < 0.0001
 - Memory class vs. Importance score: r = 0.923, p < 0.0001
 
-**Interpretation:** Memory classification follows DA algorithm with high fidelity. Strong correlation between affective properties and storage priority confirms emotion-weighted memory system is operational.
+**Interpretation:** Memory classification follows DA memory classification algorithm (Vault) with high fidelity. Strong correlation between affective properties and storage priority confirms emotion-weighted memory system is operational.
 
 ---
 
-## WEIGHT DIFFERENTIAL ANALYSIS (REM CYCLES)
+## WEIGHT DIFFERENTIAL ANALYSIS (REM CYCLES - DREAM FORGE)
 
 ### Overview
 
 **Total REM Cycles Analyzed:** 10  
 **Date Range:** October 4 - October 31, 2025  
 **Trigger Mechanism:** High-affect event accumulation  
-**Training Method:** CURLorA fine-tuning on long-term memory corpus
+**Training Method:** CURLoRA fine-tuning on long-term memory corpus
 
 ### Aggregate Results Across All Cycles
 
@@ -193,7 +193,7 @@ Mean behavioral shifts measured on held-out test prompts (n=50 per cycle):
 - Baseline task performance retained: >95% original accuracy
 - No significant degradation detected
 
-**CURLorA Integrity Check:** PASSED (all cycles)
+**CURLoRA Integrity Check:** PASSED (all cycles)
 - Previous adapter knowledge successfully integrated
 - SVD decomposition successful for all layers
 

@@ -207,7 +207,7 @@ h = 2 × [arcsin(√0.896) - arcsin(√0.1429)] = **2.51** (very large effect)
 
 **Post-hoc Tukey HSD:** All pairwise comparisons significant at p < 0.0001
 
-**Conclusion:** Memory classification strongly associated with emotion intensity as predicted by DA algorithm.
+**Conclusion:** Memory classification strongly associated with emotion intensity as predicted by DA memory algorithm (Vault).
 
 ### 2.3 Correlation Analysis
 
@@ -219,11 +219,11 @@ h = 2 × [arcsin(√0.896) - arcsin(√0.1429)] = **2.51** (very large effect)
 | Memory class × Importance score | 0.923 | < 0.0001 | Very strong positive |
 | Emotion intensity × Importance | 0.715 | < 0.0001 | Strong positive |
 
-**Interpretation:** Strong correlations confirm that memory classification follows emotion-weighted logic as specified in DA algorithm.
+**Interpretation:** Strong correlations confirm that memory classification follows emotion-weighted logic as specified in DA memory algorithm (Vault).
 
 ---
 
-## STUDY 3: WEIGHT DIFFERENTIAL ANALYSIS
+## STUDY 3: WEIGHT DIFFERENTIAL ANALYSIS (DREAM FORGE REM CYCLES)
 
 ### 3.1 REM Cycle Characteristics
 
