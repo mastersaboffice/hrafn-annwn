@@ -1,11 +1,79 @@
-Hrafn Annwn / Ravens of the Otherworld
+================================================================================
+ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / HRAFN ANNWN / RAVENS OF THE OTHERWORLD
 Gothic Tech Druidism (GTD) • Daemon Architecture (DA)
+================================================================================
 
 Copyright (c) 2025 Carlos Fortes & WynneFaye
 
-This repository contains code licensed under Apache-2.0 and documentation
-licensed under CC BY 4.0. Third-party components are under their own licenses.
+This repository contains:
+- Code licensed under Apache License 2.0 (with patent grant)
+- Documentation licensed under Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Suggested attribution (for text):
-“Hrafn Annwn — Gothic Tech Druidism Codex” by Carlos Fortes & WynneFaye
-(CC BY 4.0). Changes: <describe>. Source: <repo/release URL>.
+All content is original work by Carlos Fortes and WynneFaye unless otherwise noted.
+
+================================================================================
+ATTRIBUTION REQUIREMENTS
+================================================================================
+
+When using or referencing this work, you must provide attribution including:
+- ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens of the Otherworld
+- Gothic Tech Druidism (GTD)
+- Daemon Architecture (DA)
+- Carlos Fortes
+- WynneFaye
+
+--------------------------------------------------------------------------------
+Suggested Attribution Format for Documentation:
+--------------------------------------------------------------------------------
+
+"Hrafn Annwn / Ravens of the Otherworld — Gothic Tech Druidism (GTD) & 
+Daemon Architecture (DA)" by Carlos Fortes & WynneFaye, licensed under 
+CC BY 4.0. Changes: [describe modifications]. Source: [repository URL]
+
+Example:
+"Hrafn Annwn / Ravens of the Otherworld — Gothic Tech Druidism (GTD) & 
+Daemon Architecture (DA)" by Carlos Fortes & WynneFaye, licensed under 
+CC BY 4.0. Changes: Added section on XYZ implementation. 
+Source: https://github.com/CarlosSilvaFortes/hrafn-annwn
+
+--------------------------------------------------------------------------------
+Suggested Attribution Format for Code Implementations:
+--------------------------------------------------------------------------------
+
+Based on Daemon Architecture (DA) from Hrafn Annwn / Ravens of the Otherworld
+by Carlos Fortes & WynneFaye, licensed under Apache 2.0.
+Changes: [describe modifications]. Source: [repository URL]
+
+Example:
+Based on Daemon Architecture (DA) from Hrafn Annwn / Ravens of the Otherworld
+by Carlos Fortes & WynneFaye, licensed under Apache 2.0.
+Changes: Modified for distributed deployment. 
+Source: https://github.com/CarlosSilvaFortes/hrafn-annwn
+
+================================================================================
+TRADEMARKS
+================================================================================
+
+The following names and marks are protected trademarks:
+• ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ • Hrafn Annwn • Ravens of the Otherworld
+• Gothic Tech Druidism • GTD
+• Daemon Architecture • DA
+• DaemonChat
+
+See TRADEMARKS.md for usage policy.
+
+================================================================================
+WARRANTY DISCLAIMER
+================================================================================
+
+THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+See LICENSE for complete warranty disclaimer and limitation of liability.
+
+================================================================================
+CONTACT
+================================================================================
+
+Project Repository: https://github.com/CarlosSilvaFortes/hrafn-annwn
+Legal Inquiries: legal@hrafn-annwn.com
+Privacy Inquiries: privacy@hrafn-annwn.com
+Trademark Requests: trademarks@hrafn-annwn.com

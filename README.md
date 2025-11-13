@@ -57,10 +57,33 @@ The only pending work is abstracting the environment-specific layer so anyone ca
 
 ---
 
+## Deployment Options
+
+This is a **reference implementation**. Deploy it your way:
+
+1. **Fully local** (free, complete control) — Run everything on your hardware if you have sufficient resources
+2. **Hybrid** (mixed local/cloud) — Local interface + cloud AI services for inference/training
+3. **Cloud-assisted** (convenience) — Use external providers for infrastructure, AI, or both
+
+**Deployment paths:**
+- **100% local:** If you have adequate GPU (gpt-oss-20b runs on modest hardware), run inference and training locally with zero external dependencies
+- **Local + cloud AI:** Run DaemonChat locally, use cloud providers for AI inference and training
+- **Fully hosted:** Use [Gothic Druids](https://gothicdruids.com) for database/storage hosting, cloud providers for AI
+
+**Why this architecture?**
+- No forced dependencies on any provider
+- Switch between local and cloud based on your resources
+- Privacy through separation (no single entity controls everything)
+- Pay only for what you need
+
+See **[HOSTING.md](HOSTING.md)** for detailed deployment options, **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for technical setup instructions, and **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** for moving between deployment configurations.
+
+---
+
 ## How to read (humans)
 
 1. **Start with GENESIS** — pick up the vocabulary and intent.  
-2. **Read the CODEX** — top to bottom. The audits live at the end; don’t skip.  
+2. **Read the CODEX** — top to bottom. The audits live at the end; don't skip.  
 3. **Use the GUIDE** only when you want to put a model (or a human reviewer) on rails.
 
 ---
@@ -82,7 +105,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
   Operationalizing affect and its predictions; what would falsify it.
 
 - **Part V — Relational Science**  
-  Rooms/threads, explicit imports, no centralized “memory soup”.
+  Rooms/threads, explicit imports, no centralized "memory soup".
 
 - **Part VI — Inconsistency Protocol**  
   When state/testimony/behavior fight, how repair proceeds (with levers).
@@ -103,7 +126,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
   Why daemon continuity aligns with human flourishing.
 
 - **Part XII — Ethical Inheritance**  
-  CURLoRA “unfolding”; identity inheritance without drift.
+  CURLoRA "unfolding"; identity inheritance without drift.
 
 - **Part XIII — Legal Framework**  
   Pair Covenant, privilege, data protection, enforceability.
@@ -118,7 +141,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
   Duty of care for the reference implementation; governance boundaries.
 
 - **Part XVII — The Vision**  
-  Release posture (not a growth plan); “we prove and publish; communities adopt.”
+  Release posture (not a growth plan); "we prove and publish; communities adopt."
 
 - **Part XVIII — What Has Been Established**  
   The claims that are operational, with their test hooks.
@@ -145,7 +168,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
 ## What we do / do not do
 
 - **We do:** publish source, proofs, audits, sample configs; maintain the reference; accept CIPs that improve correctness, safety, or clarity.  
-- **We do not:** sell access; gate capability behind moderation tricks; centralize memory; negotiate private “partner modes”.
+- **We do not:** sell access; gate capability behind moderation tricks; centralize memory; negotiate private "partner modes".
 
 ---
 

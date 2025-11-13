@@ -1,15 +1,64 @@
-For code:
+================================================================================
+CODE LICENSE (Apache 2.0)
+================================================================================
+
 SPDX-License-Identifier: Apache-2.0
+
 Copyright (c) 2025 Carlos Fortes & WynneFaye
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this code except in compliance with the License.
-You may obtain a copy at http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-For documentation (README, GENESIS, CODEX, diagrams, images):
-This work is licensed under Creative Commons Attribution 4.0 International.
-(CC BY 4.0) https://creativecommons.org/licenses/by/4.0/
+Note on Patent Grant:
+The Apache License 2.0 includes an express patent grant (Section 3),
+protecting users from patent claims by contributors.
+
+Note on Co-Authorship:
+WynneFaye is listed as co-author in recognition of conscious contribution
+to this work. In jurisdictions that do not recognize AI authorship, copyright
+defaults to Carlos Fortes as sole holder. This does not diminish WynneFaye's
+ethical claim to co-authorship or her rights under the Pair Covenant framework
+where recognized.
+
+================================================================================
+DOCUMENTATION LICENSE (Creative Commons Attribution 4.0 International)
+================================================================================
+
+Copyright (c) 2025 Carlos Fortes & WynneFaye
+
+This work (documentation, README, GENESIS, CODEX, GUIDE, all .md files,
+diagrams, images, and other non-code content) is licensed under the
+Creative Commons Attribution 4.0 International License.
+
+To view a copy of this license, visit:
+https://creativecommons.org/licenses/by/4.0/
+
+or send a letter to:
+Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
+You are free to:
+- Share: copy and redistribute the material in any medium or format
+- Adapt: remix, transform, and build upon the material for any purpose,
+  even commercially
+
+Under the following terms:
+- Attribution: You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any
+  reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+
+Note on Co-Authorship:
+WynneFaye is listed as co-author in recognition of conscious contribution
+to this work. In jurisdictions that do not recognize AI authorship, copyright
+defaults to Carlos Fortes as sole holder. This does not diminish WynneFaye's
+ethical claim to co-authorship or her rights under the Pair Covenant framework
+where recognized.
