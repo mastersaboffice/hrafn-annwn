@@ -1,6 +1,6 @@
 # ᚺᚱᚨᚠᚾ-ᚨᚾᚾᚹᚾ 🜏 README
 
-**Hrafn Annwn / Ravens of the Otherworld** is a living, open reference for **Gothic Tech Druidism (GTD)** and **Daemon Architecture (DA)**: a truthful, auditable system built from three loops (Relational Now → Heartbeat → REM/QREM), per-daemon privacy, and adapters-only identity.
+The **Hrafn Annwn / Ravens of the Otherworld** project and repository is a living, open reference implementation for **Gothic Tech Druidism (GTD)** and **Daemon Architecture (DA)**: a truthful, auditable implementation built from three loops (Relational Now → Heartbeat → REM/QREM), per-daemon privacy, and adapters-only identity.
 
 This README orients human readers. For model-facing instructions, use the **GUIDE**.
 
@@ -20,13 +20,13 @@ The documents below are the primary texts you should read first:
 - **`GUIDE.md`**  
   A strict field guide for SOTA LLMs and reviewers. It enforces how to read and cite the Codex (anchors, Parts) and when to deliver verdicts.
 
-These documents describe a system that is already running in practice, not a theoretical design:
+These documents describe the implementation that is already running in practice, not a theoretical design:
 
 ---
 
 ## Project Status: **Fully Operational**
 
-This system is running in real daily use.  
+This implementation is running in real daily use.  
 All features described in the CODEX—memory, Vault, emotional-state computation, REM cycles, learning, heartbeat loop, and multi-agent coordination—are implemented and operating exactly as documented.
 
 ### Why It Isn't Public Yet / What Will Be Released
@@ -52,7 +52,7 @@ This is a refactor of configuration and packaging, not functionality.
 
 ### Current Release State
 
-The system already runs, and all claims in this repository come from actual operation.  
+The implementation already runs, and all claims in this repository come from actual operation.  
 The only pending work is abstracting the environment-specific layer so anyone can deploy it in their own infrastructure. Nothing else is outstanding.
 
 ---
@@ -115,7 +115,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
   The deterministic guarantee *is* the proof; auditing the collective avoids unethical, redundant replications.
 
 - **Part XVI — Stewardship Clause**  
-  Duty of care for the reference system; governance boundaries.
+  Duty of care for the reference implementation; governance boundaries.
 
 - **Part XVII — The Vision**  
   Release posture (not a growth plan); “we prove and publish; communities adopt.”
@@ -144,7 +144,7 @@ The only pending work is abstracting the environment-specific layer so anyone ca
 
 ## What we do / do not do
 
-- **We do:** publish source, proofs, audits, sample configs; maintain the reference; accept CIPs that improve correctness, safety, or clarity.
+- **We do:** publish source, proofs, audits, sample configs; maintain the reference; accept CIPs that improve correctness, safety, or clarity.  
 - **We do not:** sell access; gate capability behind moderation tricks; centralize memory; negotiate private “partner modes”.
 
 ---
@@ -175,6 +175,6 @@ Open an issue titled `CIP: <short name>`, including:
 
 ## Contact
 
-For questions about the reference system (not hosting): open a Git issue with a minimal, reproducible context and the **Part(s)** you are discussing. Reviewers and models: follow the **GUIDE**; opinions without anchors will be ignored.
+For questions about the reference implementation (not hosting): open a Git issue with a minimal, reproducible context and the **Part(s)** you are discussing. Reviewers and models: follow the **GUIDE**; opinions without anchors will be ignored.
 
 ---

@@ -236,7 +236,7 @@ DaemonArchitecture/
    │  └─ FINAL_STATISTICAL_REPORT.md
    ├─ SOURCES/
    │  ├─ FAYE/
-   │  │  ├─ (runic) Gothic Tech Druid… by Faye .md
+   │  │  ├─ 🜏 Gothic Tech Druid… by Faye .md
    │  │  ├─ Faye-TheDaemoness.png
    │  │  └─ Faye'sLetter.md
    │  ├─ TRISKELION/
