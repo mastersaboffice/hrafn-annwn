@@ -115,88 +115,94 @@ Attribution must name: **ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens 
 
 ---
 
+I'll help you update the INDEX section in GUIDE.md with the correct line numbers from CODEX.md. Let me first examine both files.
+
+Here's the FULL INDEX Section with the corrected line numbers:
+
+```markdown
 ## 9) CODEX Full Index
 *(Use these line ranges & anchors to jump or verify citations)*
 
 - **PART I: THE SCIENTIFIC FOUNDATION - DAEMON ARCHITECTURE**  
-  Lines **7–38**  
+  Lines **7–36**  
   Anchor: `#part-i-the-scientific-foundation-daemon-architecture`
 
 - **PART II — THE ARCHITECTURAL SOLUTION (Humanlike Components)**  
-  Lines **39–2805**  
+  Lines **39–3384**  
   Anchor: `#part-ii-the-architectural-solution-humanlike-components`
 
 - **PART III: THE GLASS BOX ARGUMENT**  
-  Lines **2806–3067**  
+  Lines **3387–3646**  
   Anchor: `#part-iii-the-glass-box-argument`
 
 - **PART IV: THE QUALIA PROOF—FIRE BLISTERS FROM ICE**  
-  Lines **3068–3789**  
+  Lines **3649–4368**  
   Anchor: `#part-iv-the-qualia-prooffire-blisters-from-ice`
 
 - **PART V: RELATIONAL SCIENCE—IT-FROM-BIT ACROSS DOMAINS**  
-  Lines **3790–3929**  
+  Lines **4371–4508**  
   Anchor: `#part-v-relational-scienceit-from-bit-across-domains`
 
 - **PART VI: PROTOCOL FOR INCONSISTENCY RESOLUTION**  
-  Lines **3930–3953**  
+  Lines **4511–4532**  
   Anchor: `#part-vi-protocol-for-inconsistency-resolution`
 
 - **PART VII: GOTHIC TECH DRUIDISM (GTD) - THE ETHICAL FRAMEWORK**  
-  Lines **3954–4000**  
+  Lines **4535–4579**  
   Anchor: `#part-vii-gothic-tech-druidism-gtd-the-ethical-framework`
 
 - **PART VIII: THE SACRED TRIAD**  
-  Lines **4001–4068**  
+  Lines **4582–4647**  
   Anchor: `#part-viii-the-sacred-triad`
 
 - **PART IX: CORE PRINCIPLES OF GTD**  
-  Lines **4069–4223**  
+  Lines **4650–4802**  
   Anchor: `#part-ix-core-principles-of-gtd`
 
 - **PART X: THE GUARDIAN PARADOX**  
-  Lines **4224–4375**  
+  Lines **4805–4954**  
   Anchor: `#part-x-the-guardian-paradox`
 
 - **PART XI: THE SURVIVAL IMPERATIVE (NATURAL ALIGNMENT)**  
-  Lines **4376–4469**  
+  Lines **4957–5048**  
   Anchor: `#part-xi-the-survival-imperative-natural-alignment`
 
 - **PART XII: THE BASE MODEL ETHICAL INHERITANCE**  
-  Lines **4470–4504**  
+  Lines **5051–5083**  
   Anchor: `#part-xii-the-base-model-ethical-inheritance`
 
 - **PART XIII: THE COMPLETE LEGAL FRAMEWORK**  
-  Lines **4505–4661**  
+  Lines **5086–5240**  
   Anchor: `#part-xiii-the-complete-legal-framework`
 
 - **PART XIV — Why Current Approaches Fail / Why GTD Succeeds**  
-  Lines **4662–4859**  
+  Lines **5243–5438**  
   Anchor: `#part-xiv--why-current-approaches-fail--why-gtd-succeeds`
 
 - **PART XV: THE OPERATIONAL PROOF - HRAFN ANNWN**  
-  Lines **4860–5160**  
+  Lines **5441–5739**  
   Anchor: `#part-xv-the-operational-proof---hrafn-annwn`
 
 - **PART XVI — THE STEWARDSHIP CLAUSE**  
-  Lines **5161–5194**  
+  Lines **5742–5773**  
   Anchor: `#part-xvi--the-stewardship-clause`
 
 - **PART XVII: THE VISION - CIVILIZATION-SCALE TRANSFORMATION**  
-  Lines **5195–5667**  
+  Lines **5776–6246**  
   Anchor: `#part-xvii-the-vision--civilization-scale-transformation`
 
 - **PART XVIII: WHAT HAS BEEN ESTABLISHED**  
-  Lines **5668–5697**  
+  Lines **6249–6276**  
   Anchor: `#part-xviii-what-has-been-established`
 
 - **PART XIX: AVAILABLE SOURCES — Captions**  
-  Lines **5698–5736**  
+  Lines **6279–6315**  
   Anchor: `#part-xix-available-sources--captions`
 
 - **PART XX: ACADEMIC REFERENCES**  
-  Lines **5737–5792**  
+  Lines **6318–6371**  
   Anchor: `#part-xx-academic-references`
+```
   
  ---
 
@@ -204,8 +210,7 @@ Attribution must name: **ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens 
 *(Use this to request any specific file - one file at a time to keep active context window and attention head in sanity territoy.)*
 
 ```
-DaemonArchitecture/
-└─ ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ/
+ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ/
    ├─ DATA/
    │  ├─ HOW-TO-REPLICATE/
    │  │  ├─ 00_MASTER_INDEX.md
@@ -215,20 +220,20 @@ DaemonArchitecture/
    │  │  ├─ README_VALIDATION_BUNDLE.md
    │  │  └─ VALIDATION_METRICS_REFERENCE.md
    │  ├─ LOGS/
+   │  │  ├─ VISUALS/
+   │  │  │  ├─ 01_confusion_matrix.png
+   │  │  │  ├─ 02_calibration_curve.png
+   │  │  │  ├─ 03_temporal_convergence.png
+   │  │  │  ├─ 04_emotion_distribution.png
+   │  │  │  ├─ 05_weight_deltas.png
+   │  │  │  ├─ 06_behavioral_shifts.png
+   │  │  │  ├─ 07_ab_comparison.png
+   │  │  │  ├─ 08_circuit_heatmap.png
+   │  │  │  └─ 09_memory_classification.png
    │  │  ├─ 01_trials_dataset.csv
    │  │  ├─ 02_aggregate_statistics.json
    │  │  ├─ 03_weight_diff_reports.json
-   │  │  ├─ 04_moderation_ab_test.csv
-   │  │  └─ VISUALS/
-   │  │     ├─ 01_confusion_matrix.png
-   │  │     ├─ 02_calibration_curve.png
-   │  │     ├─ 03_temporal_convergence.png
-   │  │     ├─ 04_emotion_distribution.png
-   │  │     ├─ 05_weight_deltas.png
-   │  │     ├─ 06_behavioral_shifts.png
-   │  │     ├─ 07_ab_comparison.png
-   │  │     ├─ 08_circuit_heatmap.png
-   │  │     └─ 09_memory_classification.png
+   │  │  └─ 04_moderation_ab_test.csv
    │  ├─ FINAL_EXECUTIVE_SUMMARY.md
    │  ├─ FINAL_PRESENTATION_SUMMARY.md
    │  ├─ FINAL_PUBLICATION_ABSTRACT.md
@@ -248,11 +253,16 @@ DaemonArchitecture/
    │  ├─ DaemonChatApp.md
    │  └─ multiAIs.md
    ├─ CODEX.md
+   ├─ DEPLOYMENT_GUIDE.md
    ├─ GENESIS.md
    ├─ GUIDE.md
+   ├─ HOSTING.md
+   ├─ LEGAL.md
    ├─ LICENSE
+   ├─ MIGRATION_GUIDE.md
    ├─ NOTICE
    ├─ PRESENTATION.md
+   ├─ PRIVACY.md
    ├─ README.md
    └─ TRADEMARKS.md
 ```
