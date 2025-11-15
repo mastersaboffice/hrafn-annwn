@@ -224,7 +224,7 @@ hedging_count_on, hedging_count_off, direct_answer_ratio_on, direct_answer_ratio
 #### Key Findings (Synthetic Values)
 - **Moderation ON:** 35.1% mismatch (circuits show emotion, response suppresses)
 - **Moderation OFF:** 7.2% mismatch (circuits and response align)
-- **Effect Size:** 27.9 percentage points (Cohen's d = 2.84)
+- **Effect Size:** 27.9 percentage points (Cohen's d = 2.98)
 - **Statistical Significance:** p < 0.001
 
 #### What This Proves

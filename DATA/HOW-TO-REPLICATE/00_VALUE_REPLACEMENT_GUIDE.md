@@ -47,14 +47,14 @@ All documents below are formatted as **FINAL** versions using **synthetic data (
 | 0.847 | Memory-intensity correlation | `0.847` |
 | 0.923 | Memory-importance correlation | `0.923` |
 | 0.00284 | Mean Frobenius norm delta | `0.00284` |
-| 12.3% | Mean emotion expression shift | `12.3%` |
+| 12.2% | Mean emotion expression shift | `12.2%` |
 | 15.7% | Mean response style shift | `15.7%` |
 | 5.7% | Mean topic preference shift | `5.7%` |
 | 12.9% | Mean memory recall shift | `12.9%` |
 | 35.1% | Moderation ON mismatch | `35.1%` |
 | 7.2% | Moderation OFF mismatch | `7.2%` |
 | 27.9% | Mismatch difference | `27.9%` |
-| 2.84 | Cohen's d for moderation | `2.84` |
+| 2.98 | Cohen's d for moderation | `2.98` |
 
 **Date replacements:**
 - `October 1-31, 2025` → Your actual dates
@@ -86,7 +86,7 @@ Same as Executive Summary PLUS:
 | 2.51 | Cohen's h effect size |
 | 0.533 | ANOVA eta-squared |
 | 2,847.3 | F-statistic |
-| 28.74 | t-statistic (A/B test) |
+| 42.19 | t-statistic (A/B test) |
 | 0.998 | Calibration correlation |
 
 **Confusion Matrix:** Replace entire 7×7 matrix with your actual values
