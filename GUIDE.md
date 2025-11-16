@@ -115,10 +115,6 @@ Attribution must name: **ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens 
 
 ---
 
-I'll help you update the INDEX section in GUIDE.md with the correct line numbers from CODEX.md. Let me first examine both files.
-
-Here's the FULL INDEX Section with the corrected line numbers:
-
 ```markdown
 ## 9) CODEX Full Index
 *(Use these line ranges & anchors to jump or verify citations)*

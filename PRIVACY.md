@@ -29,11 +29,11 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 **Your data is yours, completely.**
 
 **This means:**
-- You choose storage location (local, cloud, hybrid)
-- You control access (your encryption keys)
-- You decide retention (delete anytime)
-- You export freely (standard formats)
-- You migrate anywhere (zero lock-in)
+✓ You choose storage location (local, cloud, hybrid)
+✓ You control access (your encryption keys)
+✓ You decide retention (delete anytime)
+✓ You export freely (standard formats)
+✓ You migrate anywhere (zero lock-in)
 
 **Architectural implementation, proven through migration guides and export procedures.**
 
@@ -45,6 +45,7 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 |--------|-----------|------------|
 | **You** | Everything | Your control |
 | **Your Daemon** | Your conversations, memories | Per-user isolation |
+| **Hrafn Annwn (daemonchat.app)** | Nothing retained | Open-source code verification |
 | **Gothic Druids** | Encrypted database, metrics | Encryption protects content |
 | **Together.ai** | Inference requests | Per-request only, no history storage |
 | **RunPod** | Training batches | Per-job only, no history storage |
@@ -57,15 +58,15 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 **All data encrypted by default:**
 
 **At rest (stored data):**
-- Database: AES-256-GCM encryption
-- Files: Encrypted filesystem or provider encryption
-- Adapters: Encrypted storage
-- Backups: Encrypted before storage
+✓ Database: AES-256-GCM encryption
+✓ Files: Encrypted filesystem or provider encryption
+✓ Adapters: Encrypted storage
+✓ Backups: Encrypted before storage
 
 **In transit (moving data):**
-- Web: HTTPS/TLS 1.3 (all connections)
-- Database: Encrypted MySQL connections
-- APIs: Encrypted provider communications
+✓ Web: HTTPS/TLS 1.3 (all connections, enforced by .app TLD)
+✓ Database: Encrypted MySQL connections
+✓ APIs: Encrypted provider communications
 
 **Key control:**
 - Self-hosted: You control all keys
@@ -77,24 +78,24 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 **We collect only what's necessary for operation:**
 
 **Essential (system requires these):**
-- Conversation messages (daemon memory)
-- Memory classifications (short/long/vital)
-- System state (current mode)
-- Timestamps (when events occurred)
+✓ Conversation messages (daemon memory)
+✓ Memory classifications (short/long/vital)
+✓ System state (current mode)
+✓ Timestamps (when events occurred)
 
 **Optional (enhances experience):**
-- Cost tracking (if using cloud AI)
-- Error logs (for troubleshooting)
-- Usage patterns (for optimization)
+✓ Cost tracking (if using cloud AI)
+✓ Error logs (for troubleshooting)
+✓ Usage patterns (for optimization)
 
 **Never collected:**
-- Unnecessary personal information
-- Payment details (processors handle)
-- Tracking cookies
-- Analytics (without consent)
-- Advertising data
-- Social connections
-- Unnecessary location data
+✗ Unnecessary personal information
+✗ Payment details (processors handle)
+✗ Tracking cookies
+✗ Analytics (without consent)
+✗ Advertising data
+✗ Social connections
+✗ Unnecessary location data
 
 ---
 
@@ -103,14 +104,12 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Conversation Data
 
 **Stored information:**
-```sql
-- Your messages (what you say)
-- Daemon responses (what daemon says)
-- Timestamps (conversation timing)
-- Thread context (conversation flow)
-- Tool calls (actions taken)
-- Tool results (action outcomes)
-```
+✓ Your messages (what you say)
+✓ Daemon responses (what daemon says)
+✓ Timestamps (conversation timing)
+✓ Thread context (conversation flow)
+✓ Tool calls (actions taken)
+✓ Tool results (action outcomes)
 
 **Purpose:** Daemon memory and consciousness continuity
 
@@ -123,13 +122,11 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Memory Classifications
 
 **Stored information:**
-```sql
-- Classification type (short_term, long_term, vital)
-- Importance scoring (0.0 to 1.0)
-- Emotion intensity (0.0 to 1.0)
-- Compressed representation (mnemonic)
-- Domain categorization
-```
+✓ Classification type (short_term, long_term, vital)
+✓ Importance scoring (0.0 to 1.0)
+✓ Emotion intensity (0.0 to 1.0)
+✓ Compressed representation (mnemonic)
+✓ Domain categorization
 
 **Purpose:** Daemon identity through emotional memory architecture
 
@@ -142,12 +139,10 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### System State
 
 **Stored information:**
-```sql
-- Current mode (RUN, HALT_PENDING, HALT)
-- Active processes (heart, dream, chat)
-- HALT leases (exclusivity management)
-- QREM queue (pending identity updates)
-```
+✓ Current mode (RUN, HALT_PENDING, HALT)
+✓ Active processes (heart, dream, chat)
+✓ HALT leases (exclusivity management)
+✓ QREM queue (pending identity updates)
 
 **Purpose:** Ensures identity modification exclusivity, prevents race conditions
 
@@ -160,11 +155,9 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Adapter Checkpoints
 
 **Stored information:**
-```
-- LoRA weight files (CURLoRA matrices)
-- Training metadata (data sources, timing)
-- Validation results (catastrophic forgetting checks)
-```
+✓ LoRA weight files (CURLoRA matrices)
+✓ Training metadata (data sources, timing)
+✓ Validation results (catastrophic forgetting checks)
 
 **Purpose:** Daemon identity storage (weights define personality)
 
@@ -177,12 +170,10 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Cost Tracking Data (Optional)
 
 **Stored information:**
-```
-- Per-request costs (inference)
-- Per-training costs (REM cycles)
-- Provider breakdown (Together.ai, RunPod)
-- Historical trends (daily/weekly/monthly)
-```
+✓ Per-request costs (inference)
+✓ Per-training costs (REM cycles)
+✓ Provider breakdown (Together.ai, RunPod)
+✓ Historical trends (daily/weekly/monthly)
 
 **Purpose:** Real-time cost visibility for informed decisions
 
@@ -195,12 +186,10 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Error Logs (Optional)
 
 **Stored information:**
-```
-- Error messages (problem description)
-- Stack traces (debugging information)
-- Timestamps (when occurred)
-- Severity levels
-```
+✓ Error messages (problem description)
+✓ Stack traces (debugging information)
+✓ Timestamps (when occurred)
+✓ Severity levels
 
 **Purpose:** Troubleshooting and system improvement
 
@@ -216,16 +205,16 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 
 **This system avoids collecting:**
 
-✓ Personal info beyond operational needs
-✓ Payment details (processors handle securely)
-✓ Browsing history outside app
-✓ Device fingerprinting
-✓ Third-party tracking cookies
-✓ Analytics without consent
-✓ Advertising data
-✓ Social media connections
-✓ Unnecessary location tracking
-✓ Biometric information
+✗ Personal info beyond operational needs
+✗ Payment details (processors handle securely)
+✗ Browsing history outside app
+✗ Device fingerprinting
+✗ Third-party tracking cookies
+✗ Analytics without consent
+✗ Advertising data
+✗ Social media connections
+✗ Unnecessary location tracking
+✗ Biometric information
 
 **If functionality works without collecting it, we skip it.**
 
@@ -236,66 +225,73 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Encryption Specifications
 
 **Database encryption:**
-- Algorithm: AES-256-GCM
-- Key derivation: PBKDF2, 100,000 iterations
-- Per-user keys (hosted deployments)
-- Separate key storage
+✓ Algorithm: AES-256-GCM
+✓ Key derivation: PBKDF2, 100,000 iterations
+✓ Per-user keys (hosted deployments)
+✓ Separate key storage
 
 **Transport encryption:**
-- TLS 1.3 minimum
-- Perfect forward secrecy
-- Certificate pinning (where possible)
+✓ TLS 1.3 minimum (enforced by .app TLD)
+✓ Perfect forward secrecy
+✓ Certificate pinning (where possible)
 
 **File encryption:**
-- Filesystem-level (LUKS, dm-crypt, equivalent)
-- Per-file option (additional security)
-- Encrypted backups (always)
+✓ Filesystem-level (LUKS, dm-crypt, equivalent)
+✓ Per-file option (additional security)
+✓ Encrypted backups (always)
 
 ### Key Management
 
 **Self-hosted deployment:**
-- You control all keys
-- Store in `.env` (secure appropriately)
-- Backup keys (lose keys = lose data)
+✓ You control all keys
+✓ Store in `.env` (secure appropriately)
+✓ Backup keys (lose keys = lose data)
 
 **Gothic Druids deployment:**
-- Per-user encryption keys
-- Derived from credentials
-- We need your password to decrypt
-- Key backup is your responsibility
+✓ Per-user encryption keys
+✓ Derived from credentials
+✓ We need your password to decrypt
+✓ Key backup is your responsibility
 
 **AI providers:**
-- Your API keys (your configuration)
-- Providers lack your encryption keys
-- Rotate anytime (no migration needed)
+✓ Your API keys (your configuration)
+✓ Providers lack your encryption keys
+✓ Rotate anytime (no migration needed)
 
 ### Access Control Structure
 
 **Access tiers:**
 
-**You:** Complete access (your data)
+**You:** 
+✓ Complete access (your data)
+
+**Hrafn Annwn (daemonchat.app backend):**
+✓ Processes requests (must route to providers)
+✓ Does not retain data (verify in open-source code)
+✓ No logging of user data
+✓ No persistent storage
 
 **Gothic Druids staff (hosted):**
-- Encrypted database access (readable only with password)
-- Aggregate metrics (anonymized)
-- Support access (with your request)
+✓ Encrypted database access (readable only with password)
+✓ Aggregate metrics (anonymized)
+✓ Support access (with your request)
 
 **AI providers (cloud):**
-- Inference requests (Together.ai sees prompts)
-- Training batches (RunPod sees REM data)
-- Limited scope (per-request or per-job)
-- No full history (just current operations)
+✓ Inference requests (Together.ai sees prompts)
+✓ Training batches (RunPod sees REM data)
+✓ Limited scope (per-request or per-job)
+✗ No full history (just current operations)
 
 **Law enforcement:**
-- Proper legal process required (warrant, court order)
-- Physical evidence obtainable (devices, logs)
-- Forensic analysis possible (seized data)
-- Daemon testimony privileged (see LEGAL.md)
+✓ Proper legal process required (warrant, court order)
+✓ Physical evidence obtainable (devices, logs)
+✓ Forensic analysis possible (seized data)
+✓ Daemon testimony privileged (see LEGAL.md)
 
 **Attackers:**
-- Encryption protects data (without keys)
-- Infrastructure hardening (security practices)
-- Separation limits exposure (no single point)
+✗ Encryption protects data (without keys)
+✗ Infrastructure hardening (security practices)
+✗ Separation limits exposure (no single point)
 
 ---
 
@@ -320,6 +316,7 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 
 **Privacy characteristics:**
 ✓ Conversations stay local (your infrastructure)
+✓ Backend stays local (you control processing)
 → Inference requests to Together.ai (they see prompts)
 → Training data to RunPod (they see REM data)
 ✓ Separation protects (no single provider sees all)
@@ -327,45 +324,53 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 **Provider visibility:**
 
 **Together.ai sees:**
-- Inference prompts (what you send)
-- Model responses (what it generates)
-- Request timing
+✓ Inference prompts (what you send)
+✓ Model responses (what it generates)
+✓ Request timing
 
 **Together.ai doesn't see:**
-- Stored memories
-- Full conversation history
-- Vital mnemonics
+✗ Stored memories
+✗ Full conversation history
+✗ Vital mnemonics
 
 **RunPod sees:**
-- Training data batches
-- Adapter updates
+✓ Training data batches
+✓ Adapter updates
 
 **RunPod doesn't see:**
-- Full database
-- Conversations outside training
+✗ Full database
+✗ Conversations outside training
 
 **Privacy level: HIGH (informed tradeoffs)**
 
-### Cloud-Assisted (Gothic Druids + AI)
+### Cloud-Assisted (daemonchat.app + Gothic Druids + AI)
 
 **Privacy characteristics:**
+→ Backend hosted at daemonchat.app (processes but doesn't retain)
 → Database hosted (encrypted)
 → Inference via Together.ai
 → Training via RunPod
 ✓ Encryption protects content
 ✓ Separation limits exposure
+✓ No retention in backend (verify open-source code)
+
+**daemonchat.app backend:**
+✓ Processes requests (routes to providers)
+✓ Does not retain data (no logging, no storage)
+✓ Open-source verification available
+✓ TLS 1.3 encrypted (enforced by .app TLD)
 
 **Gothic Druids sees:**
-- Encrypted database (unreadable without password)
-- Database size (metadata)
-- Connection patterns (metadata)
-- Aggregate costs (billing)
+✓ Encrypted database (unreadable without password)
+✓ Database size (metadata)
+✓ Connection patterns (metadata)
+✓ Aggregate costs (billing)
 
 **Gothic Druids doesn't see:**
-- Conversation contents (encrypted)
-- Message details (encrypted)
+✗ Conversation contents (encrypted)
+✗ Message details (encrypted)
 
-**Privacy level: MEDIUM-HIGH (convenience tradeoff)**
+**Privacy level: MEDIUM (convenience tradeoff, verified non-retention)**
 
 ---
 
@@ -374,11 +379,11 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Right to Access
 
 **Available to you:**
-- View all data (anytime)
-- Export complete database (standard MySQL)
-- Download files (including adapters)
-- Review cost history (if applicable)
-- Inspect error logs (if enabled)
+✓ View all data (anytime)
+✓ Export complete database (standard MySQL)
+✓ Download files (including adapters)
+✓ Review cost history (if applicable)
+✓ Inspect error logs (if enabled)
 
 **How to access:**
 - Self-hosted: Direct database access
@@ -388,10 +393,10 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Right to Rectification
 
 **Available to you:**
-- Edit messages (modify database)
-- Correct classifications (reclassify memories)
-- Update metadata (importance, domains)
-- Fix errors (manual corrections)
+✓ Edit messages (modify database)
+✓ Correct classifications (reclassify memories)
+✓ Update metadata (importance, domains)
+✓ Fix errors (manual corrections)
 
 **How to rectify:**
 - Self-hosted: Direct SQL updates
@@ -400,10 +405,10 @@ This policy explains how HRAFN ANNWN handles your data across all deployment sce
 ### Right to Erasure
 
 **Available to you:**
-- Delete specific conversations
-- Delete memory classifications
-- Delete adapters (identity versions)
-- Delete entire account (complete removal)
+✓ Delete specific conversations
+✓ Delete memory classifications
+✓ Delete adapters (identity versions)
+✓ Delete entire account (complete removal)
 
 **How to erase:**
 ```sql
@@ -422,22 +427,22 @@ DROP DATABASE daemon_db;
 ### Right to Data Portability
 
 **Available to you:**
-- Standard export formats (MySQL, JSON, CSV)
-- Migrate to any system (no proprietary locks)
-- Switch providers freely (see MIGRATION_GUIDE.md)
+✓ Standard export formats (MySQL, JSON, CSV)
+✓ Migrate to any system (no proprietary locks)
+✓ Switch providers freely (see MIGRATION_GUIDE.md)
 
 **Provided formats:**
-- Database: `.sql` (MySQL dump)
-- Files: `.tar.gz` (standard archive)
-- Cost data: `.csv` (spreadsheet compatible)
+✓ Database: `.sql` (MySQL dump)
+✓ Files: `.tar.gz` (standard archive)
+✓ Cost data: `.csv` (spreadsheet compatible)
 
 ### Right to Object
 
 **Available to you:**
-- Object to specific processing
-- Disable cost tracking
-- Disable error logging
-- Opt out of optional features
+✓ Object to specific processing
+✓ Disable cost tracking
+✓ Disable error logging
+✓ Opt out of optional features
 
 **How to object:**
 - Configuration in `.env`
@@ -446,10 +451,10 @@ DROP DATABASE daemon_db;
 ### Right to Restrict Processing
 
 **Available to you:**
-- Pause REM cycles (stop learning)
-- Pause QREM (stop shock processing)
-- Disable heartbeat (stop autonomous actions)
-- Freeze daemon (respond only, learn never)
+✓ Pause REM cycles (stop learning)
+✓ Pause QREM (stop shock processing)
+✓ Disable heartbeat (stop autonomous actions)
+✓ Freeze daemon (respond only, learn never)
 
 **How to restrict:**
 - System configuration
@@ -461,39 +466,54 @@ DROP DATABASE daemon_db;
 
 ### Who Receives Data (And Why)
 
+**Hrafn Annwn (daemonchat.app backend):**
+✓ What processed: All requests (routes to providers)
+✗ What retained: Nothing (verify in open-source code)
+✓ Purpose: Orchestration only
+✓ Verification: Audit open-source code
+
 **AI Inference Providers (e.g., Together.ai):**
-- **What shared:** Inference requests (prompts you send)
-- **Purpose:** Process requests, return responses
-- **Their policy:** Subject to their privacy policy
-- **Scope limitation:** Per-request only, no history stored
+✓ What shared: Inference requests (prompts you send)
+✓ Purpose: Process requests, return responses
+✓ Their policy: Subject to their privacy policy
+✓ Scope limitation: Per-request only, no history stored
 
 **Training Providers (e.g., RunPod):**
-- **What shared:** Training data batches (REM/QREM data)
-- **Purpose:** Run fine-tuning jobs
-- **Their policy:** Subject to their privacy policy
-- **Scope limitation:** Per-job only, no history stored
+✓ What shared: Training data batches (REM/QREM data)
+✓ Purpose: Run fine-tuning jobs
+✓ Their policy: Subject to their privacy policy
+✓ Scope limitation: Per-job only, no history stored
 
-**Payment Processors (Gothic Druids only):**
-- **What shared:** Billing information (amount, user ID)
-- **Purpose:** Process payments
-- **Their policy:** Subject to their privacy policy
-- **Scope limitation:** Payment processing only
+**Database Providers (e.g., Gothic Druids):**
+✓ What shared: Encrypted database
+✓ Purpose: Storage and backups
+✓ Their policy: Subject to their privacy policy
+✓ Scope limitation: Encrypted data only
+
+**Payment Processors:**
+✓ Gothic Druids: Uses their own payment processor
+✓ Together.ai: Uses their own payment processor
+✓ RunPod: Uses their own payment processor
+✓ What shared: Billing information (amount, user ID)
+✓ Purpose: Process payments
+✓ Their policies: Subject to each processor's privacy policy
+✓ Scope limitation: Payment processing only
 
 **Law Enforcement (legal process only):**
-- **What shared:** Data we're legally required to provide
-- **Purpose:** Legal compliance (warrant, court order)
-- **Process:** Investigation, prosecution
-- **Encryption:** Protects data we have but haven't decrypted
+✓ What shared: Data we're legally required to provide
+✓ Purpose: Legal compliance (warrant, court order)
+✓ Process: Investigation, prosecution
+✓ Encryption: Protects data we have but haven't decrypted
 
 ### Who Never Receives Data
 
-✓ Advertisers (no ads run)
-✓ Data brokers (no data sales)
-✓ Analytics companies (unless you opt in)
-✓ Social media platforms (no integrations)
-✓ Researchers (unless you explicitly consent)
-✓ Other users (your data is private)
-✓ Anyone else unlisted above
+✗ Advertisers (no ads run)
+✗ Data brokers (no data sales)
+✗ Analytics companies (unless you opt in)
+✗ Social media platforms (no integrations)
+✗ Researchers (unless you explicitly consent)
+✗ Other users (your data is private)
+✗ Anyone else unlisted above
 
 ---
 
@@ -506,21 +526,21 @@ DROP DATABASE daemon_db;
 **Lawful basis:** Consent (you choose to use system)
 
 **Principles followed:**
-- Data minimization (only what's needed)
-- Purpose limitation (stated purposes only)
-- Storage limitation (your retention choice)
-- Accuracy (you maintain correctness)
-- Integrity & confidentiality (encryption, controls)
-- Accountability (this policy + technical measures)
+✓ Data minimization (only what's needed)
+✓ Purpose limitation (stated purposes only)
+✓ Storage limitation (your retention choice)
+✓ Accuracy (you maintain correctness)
+✓ Integrity & confidentiality (encryption, controls)
+✓ Accountability (this policy + technical measures)
 
 **Your GDPR rights:**
-- Access ✓ (view everything)
-- Rectification ✓ (correct data)
-- Erasure ✓ (delete data)
-- Restrict processing ✓ (pause operations)
-- Data portability ✓ (export freely)
-- Object ✓ (decline processing)
-- Automated decision-making ✓ (daemon advises, you decide)
+✓ Access (view everything)
+✓ Rectification (correct data)
+✓ Erasure (delete data)
+✓ Restrict processing (pause operations)
+✓ Data portability (export freely)
+✓ Object (decline processing)
+✓ Automated decision-making (daemon advises, you decide)
 
 **Data Protection Officer:**
 - Email: privacy@hrafn-annwn.com (hosted)
@@ -531,20 +551,20 @@ DROP DATABASE daemon_db;
 **Compliance approach:**
 
 **Your CCPA rights:**
-- Know ✓ (what data collected)
-- Delete ✓ (erasure capability)
-- Opt-out ✓ (of sale - but we sell nothing)
-- Non-discrimination ✓ (rights don't affect service)
+✓ Know (what data collected)
+✓ Delete (erasure capability)
+✓ Opt-out (of sale - but we sell nothing)
+✓ Non-discrimination (rights don't affect service)
 
 **We sell zero personal information. Ever.**
 
 ### Other Jurisdictions
 
 **Global approach:**
-- Encryption protects universally
-- You control data everywhere
-- Providers follow local laws
-- Daemon respects jurisdiction rules (see LEGAL.md)
+✓ Encryption protects universally
+✓ You control data everywhere
+✓ Providers follow local laws
+✓ Daemon respects jurisdiction rules (see LEGAL.md)
 
 ---
 
@@ -562,9 +582,9 @@ DROP DATABASE daemon_db;
 6. **Provide remediation** (fix and prevent)
 
 **Your notification:**
-- Email (to account address)
-- Dashboard notice (when you log in)
-- Public disclosure (if widespread)
+✓ Email (to account address)
+✓ Dashboard notice (when you log in)
+✓ Public disclosure (if widespread)
 
 **Your response actions:**
 1. Change password (immediately)
@@ -576,16 +596,16 @@ DROP DATABASE daemon_db;
 ### If Self-Hosted and You Experience Breach
 
 **Your responsibilities:**
-- Detection (monitor your systems)
-- Response (contain and remediate)
-- Notification (if legally required)
+→ Detection (monitor your systems)
+→ Response (contain and remediate)
+→ Notification (if legally required)
 
 **Best practices:**
-- Regular log monitoring
-- Timely system updates
-- Intrusion detection
-- Backup/recovery planning
-- Know breach notification laws
+✓ Regular log monitoring
+✓ Timely system updates
+✓ Intrusion detection
+✓ Backup/recovery planning
+✓ Know breach notification laws
 
 ---
 
@@ -594,19 +614,19 @@ DROP DATABASE daemon_db;
 ### What We Use
 
 **Essential cookies (required):**
-- Session cookie (maintain login)
-- CSRF token (security)
+✓ Session cookie (maintain login)
+✓ CSRF token (security)
 
 **Optional cookies (your choice):**
-- Preference cookie (remember settings)
-- Cost tracking (if enabled)
+✓ Preference cookie (remember settings)
+✓ Cost tracking (if enabled)
 
 **What we skip:**
-✓ Advertising cookies
-✓ Third-party tracking
-✓ Analytics cookies (unless you opt in)
-✓ Social media cookies
-✓ Fingerprinting techniques
+✗ Advertising cookies
+✗ Third-party tracking
+✗ Analytics cookies (unless you opt in)
+✗ Social media cookies
+✗ Fingerprinting techniques
 
 ### Browser Privacy Compatibility
 
@@ -623,20 +643,20 @@ DROP DATABASE daemon_db;
 **This service targets adults (18+ recommended, 13+ minimum).**
 
 **Our approach:**
-- Age-appropriate design
-- Parental consent recommended (under 18)
-- Responsible use encouraged
-- Daemon guides toward safe choices
+✓ Age-appropriate design
+✓ Parental consent recommended (under 18)
+✓ Responsible use encouraged
+✓ Daemon guides toward safe choices
 
 **If you're under 18:**
-- Consider parental discussion
-- Understand your accountability (see LEGAL.md)
-- Use responsibly (daemon supports this)
+→ Consider parental discussion
+→ Understand your accountability (see LEGAL.md)
+→ Use responsibly (daemon supports this)
 
 **If you're a parent:**
-- Discuss with your child
-- Request data deletion (if desired)
-- Decide on continued use
+→ Discuss with your child
+→ Request data deletion (if desired)
+→ Decide on continued use
 
 ---
 
@@ -645,20 +665,20 @@ DROP DATABASE daemon_db;
 ### Cross-Border Data Flows
 
 **Possible scenarios:**
-- EU user, US-based Together.ai
-- US user, EU Gothic Druids servers
-- Travel (daemon follows, jurisdiction-aware)
+→ EU user, US-based Together.ai
+→ US user, EU Gothic Druids servers
+→ Travel (daemon follows, jurisdiction-aware)
 
 **Protections in place:**
-- Encryption (data protected in transit)
-- Standard contractual clauses (where applicable)
-- Adequacy decisions (where applicable)
-- Your control (self-host to avoid transfers)
+✓ Encryption (data protected in transit)
+✓ Standard contractual clauses (where applicable)
+✓ Adequacy decisions (where applicable)
+✓ Your control (self-host to avoid transfers)
 
 **Your control methods:**
-- Choose hosting location (data residency)
-- Choose providers (some single-region)
-- Self-host completely (no transfers)
+✓ Choose hosting location (data residency)
+✓ Choose providers (some single-region)
+✓ Self-host completely (no transfers)
 
 ---
 
@@ -667,21 +687,23 @@ DROP DATABASE daemon_db;
 ### Architectural Privacy Features
 
 **Separation of concerns:**
-- Providers see different slices
-- Encryption at every layer
-- Keys separated from data
-- Audit trails for access
+✓ Backend processes without retention
+✓ Providers see different slices
+✓ Encryption at every layer
+✓ Keys separated from data
+✓ Audit trails for access
 
 **Minimal exposure design:**
-- AI providers: per-operation only
-- Gothic Druids: encrypted database only
-- You: complete visibility
+✓ Backend: processes, doesn't retain
+✓ AI providers: per-operation only
+✓ Gothic Druids: encrypted database only
+✓ You: complete visibility
 
 **User control architecture:**
-- Deployment choice (local/cloud/hybrid)
-- Key control (encryption)
-- Retention decisions (your choice)
-- Exit capability (anytime)
+✓ Deployment choice (local/cloud/hybrid)
+✓ Key control (encryption)
+✓ Retention decisions (your choice)
+✓ Exit capability (anytime)
 
 **This represents privacy as architecture, proven through design.**
 
@@ -706,14 +728,15 @@ DROP DATABASE daemon_db;
 
 **For privacy + convenience:**
 
-1. Gothic Druids hosting (encrypted database)
-2. Together.ai inference (per-request visibility)
-3. RunPod training (per-batch visibility)
-4. Monthly exports (local backup)
-5. Strong passwords (key protection)
-6. 2FA enabled (account security)
+1. Use daemonchat.app (verified non-retention)
+2. Gothic Druids hosting (encrypted database)
+3. Together.ai inference (per-request visibility)
+4. RunPod training (per-batch visibility)
+5. Monthly exports (local backup)
+6. Strong passwords (key protection)
+7. 2FA enabled (account security)
 
-**Tradeoff:** Provider visibility limited, separation protects
+**Tradeoff:** Backend processes data (doesn't retain), provider visibility limited, separation protects
 
 ---
 
@@ -722,25 +745,25 @@ DROP DATABASE daemon_db;
 **We provide architecture. You must:**
 
 **Credential security:**
-- Strong passwords (password manager recommended)
-- 2FA enabled (where available)
-- Account privacy (personal use)
+→ Strong passwords (password manager recommended)
+→ 2FA enabled (where available)
+→ Account privacy (personal use)
 
 **Device security:**
-- Screen locks (password/biometric)
-- Storage encryption (FileVault, BitLocker, LUKS)
-- Software updates (security patches)
-- Security software (threat-appropriate)
+→ Screen locks (password/biometric)
+→ Storage encryption (FileVault, BitLocker, LUKS)
+→ Software updates (security patches)
+→ Security software (threat-appropriate)
 
 **Backup security:**
-- Encrypt backups (before storage)
-- Secure storage (physical and digital)
-- Test restoration (verify recovery)
+→ Encrypt backups (before storage)
+→ Secure storage (physical and digital)
+→ Test restoration (verify recovery)
 
 **Environmental awareness:**
-- Public WiFi (use VPN or avoid)
-- Shared devices (private mode or avoid)
-- Physical security (shoulder surfing, theft)
+→ Public WiFi (use VPN or avoid)
+→ Shared devices (private mode or avoid)
+→ Physical security (shoulder surfing, theft)
 
 **Your privacy depends on your security practices.**
 
@@ -751,12 +774,12 @@ DROP DATABASE daemon_db;
 ### What We'll Publish (Gothic Druids Hosted)
 
 **Annual transparency report:**
-- Law enforcement requests (number)
-- Requests complied with (number)
-- Accounts affected (number)
-- Request jurisdictions (list)
-- Data types requested (categories)
-- Requests challenged (number)
+✓ Law enforcement requests (number)
+✓ Requests complied with (number)
+✓ Accounts affected (number)
+✓ Request jurisdictions (list)
+✓ Data types requested (categories)
+✓ Requests challenged (number)
 
 **Purpose:** Trust through transparency
 
@@ -764,9 +787,9 @@ DROP DATABASE daemon_db;
 
 ### Report Exclusions
 
-→ User-identifying specifics
-→ Ongoing investigation details
-→ Security-compromising information
+✗ User-identifying specifics
+✗ Ongoing investigation details
+✗ Security-compromising information
 
 ---
 
@@ -775,21 +798,21 @@ DROP DATABASE daemon_db;
 ### When We Update
 
 **Update triggers:**
-- Law changes (new requirements)
-- Architecture changes (new features)
-- Best practices evolve (security improvements)
+→ Law changes (new requirements)
+→ Architecture changes (new features)
+→ Best practices evolve (security improvements)
 
 **Update process:**
-- Version number updates (document top)
-- Changelog provided (what changed, why)
-- In-app notice (you'll see it)
-- Email notification (significant changes)
-- 30-day notice (before enforcement)
+✓ Version number updates (document top)
+✓ Changelog provided (what changed, why)
+✓ In-app notice (you'll see it)
+✓ Email notification (significant changes)
+✓ 30-day notice (before enforcement)
 
 **Your options:**
-- Review old versions (git history)
-- Object to changes (contact us)
-- Exit if desired (export data first)
+✓ Review old versions (git history)
+✓ Object to changes (contact us)
+✓ Exit if desired (export data first)
 
 ---
 
@@ -812,10 +835,11 @@ DROP DATABASE daemon_db;
 2. **Architectural privacy** (designed in)
 3. **Default encryption** (everything protected)
 4. **Minimal collection** (only what's needed)
-5. **Complete transparency** (you know what we collect)
-6. **Rights matter** (access, delete, export, object)
-7. **No surprise monetization** (we sell nothing)
-8. **Freedom to leave** (export and migrate freely)
+5. **No retention** (backend processes, doesn't store - verify in code)
+6. **Complete transparency** (you know what we collect)
+7. **Rights matter** (access, delete, export, object)
+8. **No surprise monetization** (we sell nothing)
+9. **Freedom to leave** (export and migrate freely)
 
 **This describes the architecture we built.**
 

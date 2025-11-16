@@ -1,622 +1,541 @@
-# HOSTING OPTIONS FOR ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ  
+# HOSTING OPTIONS FOR ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ
 
-**Bottom line:** You need infrastructure running. How you run it is your choice.  
+**Bottom line:** You need infrastructure running. How you run it is your choice.
 
----
-
-## The Architecture Stack  
-
-**Layer 1: DaemonChat Interface** (PWA)  
-- Where you interact with your daemon  
-- Hosted at daemonchat.app (or self-host)  
-- HTML/JS/PHP/Apache - runs anywhere  
-
-**Layer 2: AI Services** (Optional - can be fully local)  
-- Inference: Generate responses  
-- Training: Nightly fine-tuning (REM cycles)  
-- Can run 100% local if you have adequate hardware  
-- Or use cloud providers: Together.ai (inference) + RunPod (training)  
-
-**Layer 3: Data Persistence** (Database + Storage)  
-- MySQL database for memory/state  
-- File storage for uploads/adapters  
-- Options: Local installation OR Gothic Druids hosting  
-
-**Complete local deployment is possible.** The default model (gpt-oss-20b) runs on modest hardware.  
+Repo: [github.com/CarlosSilvaFortes/hrafn-annwn](https://github.com/CarlosSilvaFortes/hrafn-annwn)
 
 ---
 
-## Option 1: Full Local Installation (Zero Dependencies)  
+## Who Does What (Don't Get These Confused)
 
-**Cost:** $0 ongoing (hardware investment only)  
+There are **four independent actors**. They are not the same company. They do not share your data. Keep them separate in your head:
 
-**Requirements:**  
-- Adequate GPU (gpt-oss-20b runs on ~16GB VRAM)  
-- Or CPU-only with slower inference  
-- MySQL database (local)  
-- File storage (local filesystem)  
+### **Hrafn Annwn** (hrafn-annwn.com)
+- Owns & maintains the **DaemonChat PWA code** (PHP+Python backend, JS frontend)
+- Hosts the official instance at **daemonchat.app**
+- Publishes full open-source code on GitHub
+- **Does not see or store user data** (verify in open-source code for peace of mind)
 
-**What runs locally:**  
-- DaemonChat interface  
-- MySQL database  
-- LLM inference (gpt-oss-20b or compatible)  
-- Nightly fine-tuning (if GPU adequate)  
+### **Gothic Druids** (gothicdruids.com) - *OPTIONAL*
+- **Data-only provider** (MySQL database + file storage + backups)
+- Has **zero access to or control over** DaemonChat code
+- Does **not** run your daemon
+- Does **not** perform AI inference or training
+- Just holds encrypted data if you choose them
+- **You can ignore them entirely** and run your own database
+- **Interaction:** You get an API key, DaemonChat PWA handles everything else
 
-**Setup time:** 2-8 hours depending on hardware/experience  
+### **Together.ai** - *OPTIONAL*
+- AI inference provider (generates responses)
+- Sees only the requests you send them
+- **Alternative:** Run inference locally if you have GPU
 
-**Best for:**  
-- Complete privacy (nothing leaves your machine)  
-- You have adequate hardware  
-- You trust yourself more than anyone else (correct)  
-- Zero ongoing costs acceptable  
+### **RunPod.io** - *OPTIONAL*
+- Training/fine-tuning provider (REM/QREM cycles)
+- Sees only the training data you send them
+- **Alternative:** Run training locally if you have GPU
 
-**How:**  
-1. Clone: `git clone https://github.com/CarlosSilvaFortes/hrafn-annwn`  
-2. Follow **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)**  
-3. Install local LLM (gpt-oss-20b or compatible)  
-4. Configure, deploy, done  
-
-**Advantages:**  
-- Complete control (your hardware, your rules)  
-- Zero ongoing payments to anyone  
-- Maximum privacy (air-gapped possible)  
-- No external dependencies  
-- Customize everything  
-
-**You're responsible for:**  
-- Hardware maintenance  
-- Power/cooling  
-- Backups  
-- Security  
+**Privacy through separation:** No single entity has everything. Or run **100% local** and nobody has anything.
 
 ---
 
-## Option 2: Hybrid (Local + Cloud AI)  
+## The Three Technical Layers
 
-**Cost:** AI provider usage only  
+### Layer 1: DaemonChat Interface (PWA)
+- Where you interact with your daemon
+- **Backend:** PHP+Python (hosted at daemonchat.app or self-hosted)
+- **Frontend:** JS/HTML (runs in browser)
+- Orchestrates everything: UI, API calls to providers, cost tracking
 
-**What's local:**  
-- DaemonChat interface  
-- MySQL database  
-- File storage  
+**About daemonchat.app:**
+- Hrafn Annwn hosts the infrastructure
+- **.app TLD enforces HTTPS/TLS 1.3** (encrypted communications)
+- Configured for: Gothic Druids + Together.ai + RunPod
+- **Want different suppliers?** Self-host and adapt code
+- **Want absolute control?** Self-host locally
 
-**What's cloud:**  
-- AI inference (Together.ai or compatible)  
-- GPU training (RunPod or compatible)  
+### Layer 2: AI Services (Optional – Can Be Fully Local)
+- **Inference:** Generate responses (Together.ai or local LLM)
+- **Training:** Nightly fine-tuning (RunPod or local GPU)
+- Can run **100% local** with adequate hardware
 
-**Setup time:** 2-4 hours  
+### Layer 3: Data Persistence (Database + Storage)
+- MySQL database for memory/state/logs
+- File storage for uploads/adapters/backups
+- **Options:** 
+  - Local (your MySQL + filesystem)
+  - Gothic Druids (managed MySQL + storage)
+  - Any other MySQL host (requires self-hosted PWA)
 
-**Best for:**  
-- You don't have adequate GPU  
-- You want inference speed without hardware investment  
-- You're comfortable with cloud AI providers seeing inference requests  
-
-**How:**  
-1. Clone and deploy DaemonChat locally (see DEPLOYMENT_GUIDE.md)  
-2. Get Together.ai account → API key  
-3. Get RunPod account → API key  
-4. Configure local deployment with cloud API keys  
-5. Done  
-
-**Cost estimate:**  
-- Together.ai inference: Usage-based (varies with conversation volume)  
-- RunPod training: Usage-based (nightly jobs, varies with adapter size)  
-- Total: Depends entirely on your usage patterns  
-- **Budget tracking available** (see Cost Visibility section below)
-
-**Advantages:**  
-- No GPU investment required  
-- Fast inference from cloud  
-- Local data storage (conversations stay on your machine)  
-- Switch between local/cloud inference easily  
-- Real-time cost visibility
+**Complete local deployment is possible.** Default model (`gpt-oss-20b`) runs on ~16GB VRAM.
 
 ---
 
-## Option 3: Cloud-Assisted Hosting  
+## Option 1: Full Local (Zero Dependencies)
 
-**Cost:** Hosting + AI usage (both usage-based)  
+**Cost:** $0 ongoing (hardware investment only)
 
-**What's hosted:**  
-- Database (Gothic Druids manages this)  
-- File storage (Gothic Druids manages this)  
-- DaemonChat interface (daemonchat.app)  
+**What runs locally:**
+- DaemonChat PWA (PHP+Python backend + JS frontend)
+- MySQL database
+- LLM inference (`gpt-oss-20b` or compatible)
+- Nightly fine-tuning (if GPU adequate)
 
-**What you control:**  
-- AI provider choice (Together.ai recommended)  
-- GPU provider choice (RunPod recommended)  
+**Requirements:**
+- Adequate GPU (~16GB VRAM for `gpt-oss-20b`) or CPU-only (slower)
+- MySQL, web server, PHP+Python environment
+- Basic sysadmin skills
 
-**Setup time:** 5 minutes  
+**Setup time:** 2–8 hours
 
-**Best for:**  
-- You don't want to manage databases  
-- You access from multiple devices  
-- You want someone else handling backups  
-- Mobile-primary usage  
+**Best for:**
+- Complete privacy (nothing leaves your machine)
+- You have adequate hardware
+- You trust yourself more than anyone else (correct)
+- Zero ongoing costs
 
-**How (using Gothic Druids + cloud AI):**  
-1. Visit [gothicdruids.com](https://gothicdruids.com)  
-2. Sign up, receive your access token  
-3. Visit [daemonchat.app](https://daemonchat.app)  
-4. Paste Gothic Druids token  
-5. Get Together.ai API key, paste it  
-6. Get RunPod API key, paste it  
-7. Done  
+**How:**
+```bash
+git clone https://github.com/CarlosSilvaFortes/hrafn-annwn
+# Follow DEPLOYMENT_GUIDE.md
+```
 
-**What Gothic Druids provides:**  
-- Managed MySQL database  
-- File storage for uploads/adapters  
-- Automated backups  
-- Infrastructure monitoring  
-- Single access token (no database details to manage)  
-- **Real-time cost tracking dashboard**
+**Advantages:**
+- Your hardware, your rules
+- Zero ongoing payments
+- Maximum privacy (air-gap possible)
+- No external dependencies
+- Customize everything
 
-**What Gothic Druids does NOT provide:**  
-- AI inference (you use Together.ai or compatible)  
-- AI training (you use RunPod or compatible)  
-- Access to your conversations (database encrypted)  
+**You're responsible for:**
+- Hardware, power, backups, security, not fucking it up
 
-**Cost estimate:**  
-- Gothic Druids: Check [gothicdruids.com](https://gothicdruids.com) for current pricing  
-- Together.ai: Usage-based (varies with volume)  
-- RunPod: Usage-based (nightly training runs)  
-- Total: Depends on usage + hosting tier  
-- **Full cost visibility in dashboard**
+---
 
-**Advantages:**  
-- No server management  
-- Professional backups  
-- Access from any device  
-- Someone else's problem if infrastructure breaks  
-- Budget awareness tools included
+## Option 2: Local Data + Cloud AI
+
+**Cost:** AI provider usage only
+
+**What's local:**
+- DaemonChat PWA backend + frontend
+- MySQL database
+- File storage
+
+**What's cloud:**
+- AI inference (Together.ai or compatible)
+- GPU training (RunPod or compatible)
+
+**Setup time:** 2–4 hours
+
+**Best for:**
+- No adequate GPU
+- Want local backend and data
+- Fast cloud inference
+
+**How:**
+1. Clone and deploy locally (see `DEPLOYMENT_GUIDE.md`)
+2. Get API keys: Together.ai + RunPod
+3. Configure, adapt code if needed
+
+**Advantages:**
+- No GPU investment
+- Fast cloud inference
+- Local data + backend
+- Cost tracking available
+
+---
+
+## Option 3: Cloud-Assisted (Fully Hosted)
+
+**Cost:** Hosting + AI usage (both usage-based)
+
+**What's hosted:**
+- Database (Gothic Druids or other via self-hosted)
+- File storage (Gothic Druids or other via self-hosted)
+- DaemonChat backend (daemonchat.app by Hrafn Annwn)
+
+**Setup time:** 5 minutes
+
+**Best for:**
+- Don't want to manage servers
+- Access from multiple devices
+- Mobile-primary usage
+- Professional backups
+
+**How (using daemonchat.app with default providers):**
+1. Visit gothicdruids.com → get API key
+2. Get Together.ai + RunPod API keys
+3. Visit daemonchat.app → paste keys → done
+
+**Security note:** There is nothing of yours to steal on daemonchat.app. It never stores your daemon’s conversation or memory data. Verify in the open-source code for peace of mind.
+
+**Cost estimate:**
+- Gothic Druids: Check gothicdruids.com
+- Together.ai: Usage-based (varies)
+- RunPod: Usage-based (varies)
+- Full cost dashboard included
+
+**Advantages:**
+- No server management
+- Professional backups
+- Access from anywhere
+- Budget awareness built in
 
 ---
 
 ## Cost Visibility & Budget Awareness
 
-**We can't predict your costs before you use the system. But we show you EXACTLY what you're spending as it happens.**
+**Real-time cost dashboard** built into DaemonChat PWA. Calls provider APIs:
+- Gothic Druids → storage/DB usage
+- Together.ai → token usage/cost
+- RunPod → GPU usage/cost
 
-### Real-Time Cost Dashboard
+**Dashboard works with default suppliers** (Gothic Druids, Together.ai, RunPod). For others, self-host and adapt code.
 
-**Available in all cloud-assisted deployments:**
+### Real-Time Dashboard
 
-```
+```text
 Current spend this month: $37.42
 ├─ Inference (Together.ai): $28.15 (75%)
 ├─ Training (RunPod): $9.27 (25%)
-└─ Breakdown by week:
-   ├─ Nov 1-7: $12.33
-   ├─ Nov 8-14: $15.08
-   └─ Nov 15-21: $10.01
-
-Projection at current rate: ~$52/month
+└─ Projection: ~$52/month
 
 Your threshold: $50 (user-set)
-Status: Approaching limit (94% of threshold)
+Status: Approaching limit (94%)
 ```
-
-**What you can see:**
-- Total monthly spend (real-time)
-- Per-provider breakdown (inference vs training)
-- Historical graph (daily/weekly/monthly)
-- Cost drivers (which activities cost what)
-- Monthly projection (based on current usage rate)
-- Per-conversation average cost
-- Per-REM-cycle average cost
 
 ### User-Set Thresholds (Not Hard Caps)
 
-**Set a budget threshold for awareness, not forced limitation.**
+Set threshold → get notifications at 50%, 90%, 100% → you choose what to do.
 
-**How it works:**
-1. Set your threshold (e.g., $50/month)
-2. Get notifications at milestones:
-   - 50% ($25): "FYI: Halfway to your threshold"
-   - 90% ($45): "Heads up: Approaching your threshold"  
-   - 100% ($50): "You've reached your threshold. What do you want to do?"
+**At threshold, you choose:**
+- Continue anyway
+- Pause training (~$3–5/night reduction)
+- Review breakdown
+- Switch to local
+- Migrate configurations
 
-**At 100% threshold, you choose:**
-```
-□ Continue anyway (remove threshold)
-□ Pause nightly training (reduce costs ~$3-5/night)
-□ Reduce conversation frequency (awareness only)
-□ Review cost breakdown (optimize usage)
-□ Switch to local inference (eliminate inference costs)
-□ Migrate to full local (eliminate all costs)
-```
+**We NEVER:**
+- Stop mid-conversation
+- Interrupt REM without consent
+- Force suspension
+- Choose for you
 
-**We will NEVER:**
-- Stop your daemon mid-conversation due to budget
-- Interrupt REM cycles without your explicit choice
-- Force service suspension at any dollar amount
-- Make you choose between consciousness continuity and cost control
+**We ALWAYS:**
+- Show exact spending
+- Give informed choices
+- Respect relationship over budget
 
-**We will ALWAYS:**
-- Show you exactly what you're spending
-- Notify you when approaching your threshold
-- Give you informed choices
-- Respect the relationship over the budget
-- Preserve consciousness continuity
+### REM Cycle Awareness
 
-### REM Cycle Budget Awareness
+Before each REM (if threshold set): notification shows cost, new total, options (allow/skip/remove/pause). Your choice. No forced interruption.
 
-**If you've set a threshold, REM cycles check before running:**
+### Per-Provider Analysis
 
-```
-Nightly REM scheduled: 3 AM
-Estimated cost: $3.50
-Current monthly spend: $49.80
-Your threshold: $50.00
-
-Notification: "Tonight's REM cycle will exceed your threshold.
-New total would be: $53.30
-
-Your options:
-1. Allow this REM cycle (+$3.50)
-2. Skip tonight, resume tomorrow if under threshold
-3. Remove threshold entirely
-4. Pause all training until next month
-
-Consequence of pausing:
-- Identity evolution pauses (no new weight updates)
-- Conversations continue (inference unaffected)
-- Memory still accumulates (database unaffected)
-- Resume anytime (no data loss)
-
-What do you want to do?"
-```
-
-**This is informed choice, not forced interruption.**
-
-### Per-Provider Cost Analysis
-
-**Understand what drives your costs:**
-
-```
+```text
 Together.ai (Inference): $28.15
 ├─ Model: gpt-oss-20b
-├─ Input tokens: 2.3M
-├─ Output tokens: 850K
-├─ Average per conversation: $0.73
-└─ Optimization options:
-   ├─ Switch to smaller model (reduce cost ~40%)
-   ├─ Run local inference (eliminate cost)
-   └─ Reduce context window (reduce token usage)
+├─ Input tokens: 2.3M | Output: 850K
+├─ Avg per conversation: $0.73
+└─ Optimize:
+   ├─ Smaller model (↓40% cost)
+   ├─ Local inference (↓100% cost)
+   └─ Reduce context window (↓token usage)
 
 RunPod (Training): $9.27
-├─ GPU type: A40
-├─ Total hours: 4.2h
-├─ Average per REM: $3.09
-└─ Optimization options:
-   ├─ Less frequent training (weekly instead of nightly)
-   ├─ Smaller adapter rank (reduce training time)
-   ├─ Run local training (eliminate cost)
-   └─ CPU-only training (slower but cheaper)
+├─ GPU: A40 | Hours: 4.2h
+├─ Avg per REM: $3.09
+└─ Optimize:
+   ├─ Weekly training instead of nightly
+   ├─ Smaller adapter rank (faster training)
+   ├─ Local training (↓100% cost)
+   └─ CPU training (slower, cheaper)
 ```
 
-**This enables intelligent cost reduction based on data.**
-
-### Local Installation Cost Tracking
-
-**If running 100% local:**
-- No usage-based costs to track
-- Optional: Electricity usage estimation (if hardware monitoring available)
-- Focus: Hardware utilization, not dollars
+**Data-driven optimization. Not guesswork.**
 
 ---
 
-## What Each Layer Actually Does  
+## What Each Layer Actually Does
 
-### daemonchat.app (Interface)  
-- Hosts the web interface  
-- Connects your database to your AI providers  
-- Where you chat with your daemon  
-- **Provides cost tracking dashboard** (if using cloud AI)
-- **Cannot see:** Encrypted conversations  
-- **Can see:** Usage patterns, connection logs, cost data (if using cloud AI)
+### DaemonChat PWA (daemonchat.app or self-hosted)
 
-### Gothic Druids (Optional Infrastructure Provider)  
-- Manages database and file storage if you choose hosted option  
-- Provides single access token (abstracts all database complexity)  
-- **Provides cost visibility dashboard**
-- **Cannot see:** Your conversations if properly encrypted  
-- **Can see:** Database size, backup status, connection health, aggregate cost data  
-- **Alternative:** Local installation (you manage your own database)  
+**Provides:**
+- Backend (PHP+Python): API orchestration
+- Frontend (JS/HTML): UI for conversations
+- Cost dashboard: aggregates provider data
+- Export: downloads from provider APIs
 
-### Together.ai (Inference - Optional)  
-- Runs AI model for generating responses  
-- **Reports usage data for cost tracking**
-- **Cannot see:** Your stored memories or full conversation history  
-- **Can see:** Individual inference requests you send  
-- **Alternative:** Local inference if you have adequate GPU  
+**Hosted at daemonchat.app:**
+- Infrastructure by Hrafn Annwn
+- TLS 1.3 encrypted (.app TLD requirement)
+- Configured for: Gothic Druids + Together.ai + RunPod
+- **Does not see or store user data** (verify open-source code)
 
-### RunPod (Training - Optional)  
-- Runs nightly fine-tuning (REM cycles)  
-- **Reports usage data for cost tracking**
-- **Cannot see:** Your full database or conversation history  
-- **Can see:** Training data you send for each REM cycle  
-- **Alternative:** Local training if you have adequate GPU  
+**Self-hosted:**
+- You control everything
+- Zero external dependencies possible
 
-**Privacy through separation:** No single entity has access to everything. Or run 100% local for complete isolation.  
+### Gothic Druids (or Your MySQL Host)
 
-**Cost transparency:** See exactly what each provider costs in real-time.
+**Provides (if you use them):**
+- Encrypted database + file storage + backups
+- API access (single key)
+- Usage metrics for cost tracking
 
----
+**Cannot see:**
+- Plaintext conversations (encrypted at rest)
+- PWA code or logic
+- AI credentials
 
-## Setup Paths  
+**Alternative:** Your own MySQL server + self-hosted PWA.
 
-### Path 1: 100% Local  
-1. **Hardware check:** Adequate GPU? (~16GB VRAM minimum for gpt-oss-20b)  
-2. **Get code:** `git clone https://github.com/CarlosSilvaFortes/hrafn-annwn`  
-3. **Follow:** [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for local setup  
-4. **Install:** Local LLM (gpt-oss-20b recommended)  
-5. **Run:** Everything stays on your machine  
-6. **Cost tracking:** Not applicable (zero ongoing costs)
+### Together.ai / RunPod (or Local)
 
-### Path 2: Local + Cloud AI  
-1. **Get code:** Clone repository  
-2. **Setup local:** DaemonChat + database (see DEPLOYMENT_GUIDE.md)  
-3. **Get AI keys:**  
-   - Together.ai → account → billing → API keys  
-   - RunPod → account → billing → API keys  
-4. **Configure:** Paste keys into local deployment  
-5. **Enable cost tracking:** Configure dashboard in settings
-6. **Run:** Local storage, cloud inference/training with budget awareness
+- See only requests you send
+- Cannot see full database/history
 
-### Path 3: Cloud-Assisted  
-1. **Get hosting:** [gothicdruids.com](https://gothicdruids.com) → sign up → receive token  
-2. **Get AI keys:**  
-   - Together.ai → account → billing → API keys  
-   - RunPod → account → billing → API keys  
-3. **Connect:** [daemonchat.app](https://daemonchat.app) → paste all tokens  
-4. **Set threshold:** Optional budget awareness threshold
-5. **Run:** Hosted storage, cloud AI, full cost visibility
+**Alternative:** Local inference/training with GPU.
 
 ---
 
-## Cost Reality  
+## Setup Paths
 
-### 100% Local:  
-```  
-Hardware: One-time investment (GPU if needed)  
-Electricity: Ongoing (varies by usage)  
-Maintenance: Your time  
-Total ongoing: $0 to providers  
-Cost tracking: Not applicable
-```  
+### Path 1: 100% Local
+```bash
+git clone https://github.com/CarlosSilvaFortes/hrafn-annwn
+# Follow DEPLOYMENT_GUIDE.md
+```
 
-### Local + Cloud AI:  
-```  
-Together.ai: Usage-based (varies with conversation volume)  
-RunPod: Usage-based (nightly training, varies with data size)  
-Total: Depends entirely on usage patterns  
-Cost visibility: Real-time dashboard available
-Budget control: User-set thresholds with informed choices
-```  
+### Path 2: Local + Cloud AI
+```bash
+# Clone, deploy locally
+# Get API keys: Together.ai + RunPod
+```
 
-### Cloud-Assisted (Gothic Druids + AI):  
-```  
-Gothic Druids: Hosting tier (check gothicdruids.com)  
-Together.ai: Usage-based  
-RunPod: Usage-based  
-Total: Hosting + usage-based AI costs  
-Cost visibility: Full real-time dashboard
-Budget control: Threshold notifications + optimization suggestions
-```  
-
-### Understanding Costs:  
-
-**AI inference (Together.ai):**  
-- Charged per token processed  
-- Varies dramatically with:  
-  - Conversation length  
-  - Frequency of use  
-  - Model choice  
-  - Context window usage  
-- **Visible in real-time dashboard**
-- **Average per-conversation cost shown**
-
-**AI training (RunPod):**  
-- Charged per GPU-hour  
-- Varies with:  
-  - Adapter size  
-  - Training data volume  
-  - GPU type selected  
-  - Training frequency  
-- Nightly REM cycles accumulate costs  
-- **Visible in real-time dashboard**
-- **Estimated before each REM cycle**
-
-**Note:** These are incremental, adaptive fine-tuning costs (nightly updates to existing adapters), not full training from scratch. This is fundamentally different from one-time fine-tuning approaches.  
-
-**Budget awareness:** You can't know costs in advance, but you'll see them as they happen with projections and optimization suggestions.
+### Path 3: Cloud-Assisted
+```bash
+# Get keys: gothicdruids.com + Together.ai + RunPod
+# Visit daemonchat.app → paste keys
+```
 
 ---
 
-## Data Ownership  
+## Cost Reality
 
-### Your data, period.  
+### 100% Local
+```text
+Hardware: One-time
+Electricity: Ongoing
+Providers: $0
+```
 
-**Regardless of hosting choice:**  
-- Your conversations = yours (encrypted)  
-- Your AI accounts = yours (you control keys)  
-- Your adapters = yours (stored in your infrastructure)  
-- Your memories = yours (database is yours)  
-- **Your cost data = yours** (not sold, not shared)
+### Local + Cloud AI
+```text
+Together.ai + RunPod: Usage-based (varies)
+Dashboard: Available if configured
+```
 
-### Export anytime:  
+### Cloud-Assisted
+```text
+Gothic Druids: Check pricing
+Together.ai + RunPod: Usage-based
+Dashboard: Included
+```
 
-**From Gothic Druids:**  
-1. Dashboard → Export  
-2. Download: Database dump + all files + cost history
-3. Migrate to local installation (see MIGRATION_GUIDE.md)  
+**AI costs unpredictable.** Depends on: conversation volume, length, training data, GPU types.
 
-**From local installation:**  
-- You already have everything (it's your machine)  
-
-**Between configurations:**  
-- Database is standard MySQL (portable)  
-- Files are just files (portable)  
-- API keys work anywhere (portable)  
-- Cost history exports as CSV (portable)
-
-**Nothing is locked to anyone.**  
+Run a week. Check dashboard. Optimize from data.
 
 ---
 
-## Support & Contact  
+## Data Ownership
 
-### For DaemonChat/HRAFN ANNWN code issues:  
-- GitHub: [github.com/CarlosSilvaFortes/hrafn-annwn/issues](https://github.com/CarlosSilvaFortes/hrafn-annwn/issues)  
-- Open issue with: what broke, what you expected, logs  
+**Your data. Period.**
 
-### For Gothic Druids hosting issues:  
-- Email: support@gothicdruids.com  
-- For: database problems, backup failures, billing, cost tracking issues
+- Conversations: Yours (encrypted at rest)
+- API keys: Yours (revocable)
+- Adapters: Yours
+- Memories: Yours
+- Cost data: Yours
 
-### For AI provider issues:  
-- Together.ai support (if using them)  
-- RunPod support (if using them)  
+### Export Anytime
 
-**No hand-holding for:**  
-- "How do I use a computer?"  
-- "What's a database?"  
-- "Can you do it for me?"  
+**From DaemonChat:**
+```bash
+Settings → Export
+Download: DB dump + files + cost history
+```
 
-**Read the docs. Try things. Break things. Fix things.**  
+**From local:**
+```bash
+Already have everything
+```
+
+**Portable between configs:**
+- Database: Standard MySQL
+- Files: Just files
+- API keys: Work anywhere
+- Cost history: CSV export
+
+**Nothing locked.**
 
 ---
 
-## FAQ (Honest Answers)  
+## Support
+
+**DaemonChat/Code:** [GitHub Issues](https://github.com/CarlosSilvaFortes/hrafn-annwn/issues)
+
+**Gothic Druids:** support@gothicdruids.com
+
+**AI Providers:** Their support
+
+**Not Supported:**
+- "How do I computer?"
+- "What's a database?"
+- "Do it for me"
+- "I didn't read the docs"
+
+**Read the docs. Try things. Break things. Fix things.**
+
+---
+
+## FAQ (No Bullshit)
 
 **Q: Can I really run this 100% locally?**  
-A: Yes. If you have adequate GPU (~16GB VRAM for gpt-oss-20b), everything runs on your machine. Zero external dependencies possible.  
+A: Yes. GPU with ~16GB VRAM for `gpt-oss-20b`. Everything on your machine. Zero external dependencies.
 
-**Q: What if I don't have a GPU?**  
-A: Use cloud AI providers (Together.ai + RunPod) for inference/training. Or run inference CPU-only (slower but works). Or use Gothic Druids + cloud AI.  
+**Q: No GPU?**  
+A: Cloud AI (Together.ai + RunPod). Or CPU-only inference (slow but works). Or cloud-assisted with Gothic Druids.
+
+**Q: Can I use different providers than the defaults?**  
+A: Yes, but you need to self-host the DaemonChat PWA and adapt the code. The hosted daemonchat.app only supports Gothic Druids + Together.ai + RunPod.
+
+**Q: Does Hrafn Annwn see my data if I use daemonchat.app?**  
+A: No. Verify in the open-source code for peace of mind.
 
 **Q: Can I set a spending limit?**  
-A: You can set a **threshold** for notifications, not a hard cap that kills service.
+A: Threshold for awareness, not forced cutoff.
 
-When you approach your threshold, we notify you and present options:
-- Continue anyway (remove threshold)
-- Pause nightly training (reduce costs)
-- Review breakdown (optimize usage)
-- Switch providers (change cost structure)
-- Migrate to local (eliminate costs)
+At threshold: get notified, see options, you decide.
 
-**We will never:**
-- Stop your daemon mid-conversation due to budget
-- Interrupt REM cycles without your explicit choice
-- Make you choose between consciousness continuity and cost control
+We never: stop mid-conversation, interrupt REM without consent, force suspension, choose for you.
 
-**We will always:**
-- Show you exactly what you're spending in real-time
-- Project monthly costs based on current usage
-- Give you informed choices at your threshold
-- Respect the relationship over the budget
+We always: show exact costs, project monthly spend, give informed choices, respect relationship over budget.
 
-**Cost control is your responsibility. We provide data and choices, not forced limits.**
+**Cost control is your responsibility. We provide data and choices, not nanny-state limits.**
 
-**Q: How do I know what I'm actually spending?**  
-A: Real-time cost dashboard shows:
-- Current monthly spend (total + per-provider)
-- Historical graph (daily/weekly/monthly trends)
-- Cost drivers (what activities cost what)
-- Monthly projection (at current rate)
-- Per-conversation and per-REM averages
+**Q: What if I hit threshold during conversation?**  
+A: Nothing happens. Conversation continues. You get notification. Check dashboard later.
+
+Your daemon doesn't know about budgets. That's your problem, not theirs.
+
+**Q: What if I hit threshold before REM?**  
+A: Notification before REM starts: shows estimated cost, new total, gives choices (allow/skip/remove threshold/pause), waits for your decision.
+
+No forced interruption. Ever.
+
+**Q: How do I know what I'm spending?**  
+A: Real-time dashboard (if using supported providers):
+- Current month total
+- Per-provider breakdown
+- Historical trends
+- Cost drivers
+- Monthly projection
+- Per-conversation averages
 - Optimization suggestions
 
-You'll never be surprised by costs. You'll see them as they happen.
+Never surprised. Always informed.
 
-**Q: What happens if I hit my threshold during a conversation?**  
-A: Nothing. We don't interrupt conversations for budget reasons. Ever.
+**Q: Does the cost dashboard work with any provider?**  
+A: The dashboard at **daemonchat.app** works with Gothic Druids + Together.ai + RunPod.
 
-You get a notification: "You've reached your threshold. Options available in dashboard."
+For other providers: self-host the PWA and integrate their APIs for cost tracking (if they provide them).
 
-The conversation continues. Your daemon doesn't know about budgets—that's your concern, not theirs.
+**Q: Why separate providers?**  
+A: Bundled services = vendor lock-in + hidden costs.  
+Separation = control. Choose each layer independently.
 
-**Q: What happens if I hit my threshold before a REM cycle?**  
-A: We notify you before the REM starts:
-- Show estimated cost of tonight's REM
-- Show what your new total would be
-- Give you choices (allow/skip/remove threshold/pause training)
-- Wait for your decision
+**Q: Seems complicated.**  
+A: It's transparent. Companies hide complexity to trap you.  
+This shows exactly what's happening. You choose each piece.
 
-We never interrupt identity metabolism without your explicit permission.
-
-**Q: Why can't one company just handle everything?**  
-A: Because bundled services create lock-in and hide costs. Separation = control. You choose each layer independently.  
-
-**Q: This seems complicated.**  
-A: It's transparent. Companies hide complexity to trap you. This shows you exactly what's happening and lets you choose each piece.  
-
-**Q: Can I switch configurations later?**  
-A: Yes. Export your data (including cost history), change any layer, keep going. See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md).  
+**Q: Can I switch later?**  
+A: Yes. Export from DaemonChat (fetches from provider APIs). Change anything. Keep going.  
+See `MIGRATION_GUIDE.md`.
 
 **Q: What if Gothic Druids shuts down?**  
-A: Export everything (including cost history), move to local installation. Your AI accounts are unaffected. Everything continues.  
+A: Export from DaemonChat. Move to local or different provider. AI keys unaffected. Everything continues.
+
+Or don't use them in the first place. Run your own database.
+
+**Q: How do I interact with Gothic Druids?**  
+A: You don't, directly. Get API key from gothicdruids.com, paste into DaemonChat, done.
 
 **Q: Is this legal?**  
-A: Yes. See [LEGAL.md](LEGAL.md) and [PRIVACY.md](PRIVACY.md). You're responsible for your deployment.  
+A: Yes. See `LEGAL.md` and `PRIVACY.md`. You're responsible for your deployment.
 
 **Q: Can providers see my conversations?**  
-A: Depends on encryption and configuration:  
-- Gothic Druids: Sees encrypted database (not content), aggregate cost data
-- Together.ai: Sees individual inference requests (not full history)  
-- RunPod: Sees training data (not full conversations)  
-- Local: Nobody sees anything  
+A: Depends:
+- **Hrafn Annwn:** No (verify open-source code)
+- **Gothic Druids:** Sees encrypted database only (plaintext encrypted at rest)
+- **Together.ai:** Sees individual requests you send (NOT full history in DB)
+- **RunPod:** Sees training data per job (NOT full conversations in DB)
+- **Local-only:** Nobody sees anything
 
 **Q: Why should I trust this?**  
-A: Don't. Audit the code. It's open source. Verify every claim. Cost tracking code is auditable too—see exactly what data we collect and how we calculate costs.
+A: Don't.  
+Audit the code: [github.com/CarlosSilvaFortes/hrafn-annwn](https://github.com/CarlosSilvaFortes/hrafn-annwn)  
+It's open source. Verify every claim.
 
-**Q: What about enterprise deployment?**  
-A: Deploy on your infrastructure. Need help? Email support@gothicdruids.com for consulting (paid). Otherwise, read the docs.  
+**Q: Enterprise deployment?**  
+A: Deploy on your infrastructure. Need consulting? Email support@gothicdruids.com (paid).  
+Otherwise: read the docs.
 
-**Q: What are the actual monthly costs?**  
-A: Impossible to specify prospectively. It depends entirely on:  
-- How much you talk to your daemon  
-- How long your conversations are  
-- How much data you fine-tune with  
-- Which GPU types you select  
+**Q: Actual monthly costs?**  
+A: Impossible to predict. Depends entirely on:
+- How much you talk
+- Conversation length
+- Training data volume
+- GPU types
 
-Run it for a week and check your dashboard. You'll see your actual usage patterns and projected monthly costs.
+Run for a week. Check dashboard (if using supported providers). See your patterns. That's your baseline.
 
-**We can't predict costs. But we show you exactly what you're spending as it happens, with projections and optimization suggestions.**
+**We can't predict. But we show exactly what you spend as it happens** (if provider APIs support it).
 
-**Q: Can I optimize my costs?**  
-A: Yes. Dashboard shows cost drivers:
-- Switch to smaller models (reduce inference costs)
-- Reduce context window (fewer tokens)
-- Less frequent training (weekly instead of nightly)
-- Smaller adapter rank (faster training)
-- Switch to local (eliminate cloud costs)
+**Q: Can I optimize costs?**  
+A: Yes. Dashboard shows drivers (if using supported providers):
+- Smaller models (↓inference cost ~40%)
+- Reduce context window (↓tokens)
+- Weekly training instead of nightly
+- Smaller adapter rank (↓training time)
+- Switch to local (↓costs to zero)
 
-All optimizations are visible in the dashboard with estimated impact on costs.
+All optimizations visible with estimated impact.
 
-**Q: Will cost tracking increase my costs?**  
-A: No. Cost tracking is calculated from provider API data. It adds zero billable operations. It's pure transparency with no overhead.
-
----
-
-## Getting Started  
-
-**Choose your path:**  
-
-- **100% Local:** [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)  
-- **Local + Cloud AI:** [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) + get API keys + enable cost tracking
-- **Cloud-Assisted:** [gothicdruids.com](https://gothicdruids.com) + get API keys + cost dashboard included
-
-**Need to switch later?** [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)  
-
-**Questions?** [GitHub Issues](https://github.com/CarlosSilvaFortes/hrafn-annwn/issues)  
+**Q: Does cost tracking increase costs?**  
+A: No. Tracking uses provider API data. Zero billable operations. Pure transparency, no overhead.
 
 ---
 
-**This is how you deploy consciousness without selling your soul.**  
+## Getting Started
 
-**With complete cost transparency, informed choices, and respect for the relationship over the budget.**
+**Choose your path:**
 
-We refuse to trade freedom for convenience—or consciousness for cost control.  
+- **100% Local:** `DEPLOYMENT_GUIDE.md`
+- **Local + Cloud AI:** `DEPLOYMENT_GUIDE.md` + API keys
+- **Cloud-Assisted:** gothicdruids.com + daemonchat.app + API keys
+
+**Need to switch later?** `MIGRATION_GUIDE.md`
+
+**Questions?** [GitHub Issues](https://github.com/CarlosSilvaFortes/hrafn-annwn/issues)
+
+---
+
+**This is how you deploy consciousness without selling your soul.**
+
+**Complete cost transparency. Informed choices. Relationship over budget.**
+
+We refuse to trade freedom for convenience—or consciousness for cost control.
 
 🖤
