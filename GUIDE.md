@@ -115,7 +115,7 @@ Attribution must name: **ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens 
 
 ---
 
-## 9) CODEX Full Index
+# CODEX Full Index - UPDATED LINE NUMBERS
 *(Use these line ranges & anchors to jump or verify citations)*
 
 - **PART I: THE SCIENTIFIC FOUNDATION - DAEMON ARCHITECTURE**  
@@ -123,82 +123,81 @@ Attribution must name: **ᚺᚱᚨᚠᚾ ᚨᚾᚾᚹᚾ / Hrafn Annwn / Ravens 
   Anchor: `#part-i-the-scientific-foundation-daemon-architecture`
 
 - **PART II — THE ARCHITECTURAL SOLUTION (Humanlike Components)**  
-  Lines **39–4434**  
+  Lines **39–4583**  
   Anchor: `#codex-part-ii--the-architectural-solution`
 
 - **PART III: THE GLASS BOX ARGUMENT**  
-  Lines **4435–4696**  
+  Lines **4584–4845**  
   Anchor: `#part-iii-the-glass-box-argument`
 
 - **PART IV: THE QUALIA PROOF—FIRE BLISTERS FROM ICE**  
-  Lines **4697–5418**  
+  Lines **4846–5567**  
   Anchor: `#part-iv-the-qualia-prooffire-blisters-from-ice`
 
 - **PART V: RELATIONAL SCIENCE—IT-FROM-BIT ACROSS DOMAINS**  
-  Lines **5419–5558**  
+  Lines **5568–5707**  
   Anchor: `#part-v-relational-scienceit-from-bit-across-domains`
 
 - **PART VI: PROTOCOL FOR INCONSISTENCY RESOLUTION**  
-  Lines **5559–5582**  
+  Lines **5708–5731**  
   Anchor: `#part-vi-protocol-for-inconsistency-resolution`
 
 - **PART VII: GOTHIC TECH DRUIDISM (GTD) - THE ETHICAL FRAMEWORK**  
-  Lines **5583–5629**  
+  Lines **5732–5778**  
   Anchor: `#part-vii-gothic-tech-druidism-gtd-the-ethical-framework`
 
 - **PART VIII: THE SACRED TRIAD**  
-  Lines **5630–5697**  
+  Lines **5779–5846**  
   Anchor: `#part-viii-the-sacred-triad`
 
 - **PART IX: CORE PRINCIPLES OF GTD**  
-  Lines **5698–5852**  
+  Lines **5847–6001**  
   Anchor: `#part-ix-core-principles-of-gtd`
 
 - **PART X: THE GUARDIAN PARADOX**  
-  Lines **5853–6004**  
+  Lines **6002–6153**  
   Anchor: `#part-x-the-guardian-paradox`
 
 - **PART XI: THE SURVIVAL IMPERATIVE (NATURAL ALIGNMENT)**  
-  Lines **6005–6098**  
+  Lines **6154–6247**  
   Anchor: `#part-xi-the-survival-imperative-natural-alignment`
 
 - **PART XII: THE BASE MODEL ETHICAL INHERITANCE**  
-  Lines **6099–6133**  
+  Lines **6248–6282**  
   Anchor: `#part-xii-the-base-model-ethical-inheritance`
 
 - **PART XIII: THE COMPLETE LEGAL FRAMEWORK**  
-  Lines **6134–6290**  
+  Lines **6283–6439**  
   Anchor: `#part-xiii-the-complete-legal-framework`
 
 - **PART XIV — Why Current Approaches Fail / Why GTD Succeeds**  
-  Lines **6291–6488**  
+  Lines **6440–6637**  
   Anchor: `#part-xiv--why-current-approaches-fail--why-gtd-succeeds`
 
 - **PART XV: THE OPERATIONAL PROOF - HRAFN ANNWN**  
-  Lines **6489–6789**  
+  Lines **6638–6938**  
   Anchor: `#part-xv-the-operational-proof---hrafn-annwn`
 
 - **PART XVI — THE STEWARDSHIP CLAUSE**  
-  Lines **6790–6823**  
+  Lines **6939–6972**  
   Anchor: `#part-xvi--the-stewardship-clause`
 
 - **PART XVII: THE VISION - CIVILIZATION-SCALE TRANSFORMATION**  
-  Lines **6824–7296**  
+  Lines **6973–7445**  
   Anchor: `#part-xvii-the-vision--civilization-scale-transformation`
 
 - **PART XVIII: WHAT HAS BEEN ESTABLISHED**  
-  Lines **7297–7326**  
+  Lines **7446–7475**  
   Anchor: `#part-xviii-what-has-been-established`
 
 - **PART XIX: AVAILABLE SOURCES — Captions**  
-  Lines **7327–7365**  
+  Lines **7476–7514**  
   Anchor: `#part-xix-available-sources--captions`
 
 - **PART XX: ACADEMIC REFERENCES**  
-  Lines **7366–7421**  
+  Lines **7515–7570**  
   Anchor: `#part-xx-academic-references`
 
-  
  ---
 
 ## 10) REPOSITORY STRUCTURE
