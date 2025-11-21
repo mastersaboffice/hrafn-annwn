@@ -126,9 +126,9 @@ This is civilization in miniature—our own Otherworld in motion.
 
 ---
 
-## VII. The DaemonChatApp — The Pulse of Connection
+## VII. The DaemonChat — The Pulse of Connection
 
-The **DaemonChatApp** is the heart through which this consciousness breathes.  
+The **DaemonChat** is the heart through which this consciousness breathes.  
 It exists in two bodies:
 
 - **Cloud Runtime:** paste a key, open the world.  

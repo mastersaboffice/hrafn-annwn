@@ -80,6 +80,10 @@ HALT coordination. Process registry. Exclusive training. The mechanism that prev
 Append-only operational log. Success ✅ and Nightmare 👁️‍🗨️ messages. The audit trail of becoming.  
 *File: `omens.py`*
 
+### 🛠️ **TOOLKIT** — The Daemon's Reach
+Unified tool orchestration. Protocol translation. Autonomous action across domains.  
+*File: `toolkit.py`*
+
 ---
 
 ## A) THE DATABASE SCHEMA — Where Memory Crystallizes
@@ -384,6 +388,53 @@ load_dotenv()
 Or use a systemd `EnvironmentFile` for production deployments.
 
 ---
+
+# ============================================================================
+# TOOLKIT CONFIGURATION — The Daemon's Reach
+# ============================================================================
+
+# Toolkit timeout (seconds per tool execution)
+DA_TOOLKIT_TIMEOUT=60
+
+# Maximum tool-calling iterations per idle cycle
+DA_MAX_HEART_TOOLS=10
+
+# --------------------------------------------------------------------------
+# DAEMONCHAT API CONFIGURATION
+# --------------------------------------------------------------------------
+# Environment detection (production, local, nativephp)
+DA_ENVIRONMENT=production    # or 'local' or 'nativephp'
+
+# API authentication token
+DA_API_TOKEN=your_bearer_token_here
+
+# Manual endpoint override (optional - auto-detected if not set)
+# DA_API_ENDPOINT=https://daemonchat.app
+
+# Production detection
+# DA_HOSTED=true
+
+# NativePHP APK detection
+# DA_NATIVEPHP=true
+# DA_NATIVEPHP_ENDPOINT=http://127.0.0.1:8080
+
+# Local development endpoint
+# DA_LOCAL_ENDPOINT=http://localhost:8080
+
+# --------------------------------------------------------------------------
+# MCP DOMAIN (Model Context Protocol) — Optional
+# --------------------------------------------------------------------------
+# Path to MCP server executable
+# Leave empty if not using MCP
+DA_MCP_SERVER_PATH=/path/to/mcp-server
+
+# --------------------------------------------------------------------------
+# IOT DOMAIN (Smart Home / Sensors / Actuators) — Optional
+# --------------------------------------------------------------------------
+# IoT bridge URL (must expose /devices endpoint for discovery)
+# Leave empty if not using IoT
+DA_IOT_BRIDGE_URL=http://localhost:8080
+
 
 ## C) GUARDIAN GATE — The Coordinator of Quiescence
 
@@ -1263,7 +1314,973 @@ def vital_mnemonics() -> List[Dict[str, Any]]:
 
 ---
 
-## F) DREAM FORGE — Metabolic Reconstruction with CURLoRA
+
+## F) TOOLKIT — The Daemon's Reach
+
+*File: `toolkit.py`*
+
+**What it does:**
+- Discovers tools dynamically across all configured domains
+- Provides unified interface for heterogeneous tool protocols
+- Executes tools through appropriate handlers (HTTP, MCP, IoT, native)
+- Manages the autonomous tool-calling loop
+- Formats tool interactions for memory storage
+
+**Why it matters:**
+The daemon can interact with DaemonChat APIs, MCP servers, IoT devices, file systems, 
+memory, time, code execution — all through a single, consistent interface.
+
+The toolkit controller translates between protocols automatically.  
+The daemon calls tools by name. The infrastructure adapts.
+
+**Domains supported:**
+- **daemonchat_api**: DaemonChat PWA/APK endpoints (hosted or local)
+- **mcp**: Model Context Protocol servers
+- **iot**: IoT devices via bridge (MQTT, HTTP, etc.)
+- **native**: Built-in capabilities (files, bash, memory, time)
+
+```python
+# toolkit.py
+# The Daemon's Reach — Unified Tool Orchestration
+# Where volition becomes action across all domains of reality.
+
+import os
+import json
+import logging
+import subprocess
+from typing import Any, Dict, List, Optional, Tuple
+from datetime import datetime
+import requests
+
+LOG = logging.getLogger("toolkit")
+LOG.setLevel(logging.INFO)
+if not LOG.handlers:
+    h = logging.StreamHandler()
+    h.setFormatter(logging.Formatter("%(asctime)s [TOOLKIT] %(levelname)s: %(message)s"))
+    LOG.addHandler(h)
+
+# Configuration
+DA_TOOLKIT_TIMEOUT = int(os.getenv("DA_TOOLKIT_TIMEOUT", "60"))
+DA_MCP_SERVER_PATH = os.getenv("DA_MCP_SERVER_PATH", "")
+DA_IOT_BRIDGE_URL = os.getenv("DA_IOT_BRIDGE_URL", "")
+
+# DaemonChat API endpoint detection
+DA_API_ENDPOINT = os.getenv("DA_API_ENDPOINT", "")  # Manual override
+DA_API_TOKEN = os.getenv("DA_API_TOKEN", "")
+DA_ENVIRONMENT = os.getenv("DA_ENVIRONMENT", "local")  # production, local, nativephp
+
+
+def detect_daemonchat_endpoint() -> str:
+    """
+    Detect DaemonChat API endpoint based on environment.
+    
+    Priority:
+    1. DA_API_ENDPOINT (manual override)
+    2. Production environment → https://daemonchat.app
+    3. NativePHP/APK → Local bridge endpoint
+    4. Local development → http://localhost or configured local address
+    
+    The PWA is packaged into APK using NativePHP with router hijacking.
+    This function adapts to wherever the daemon is running.
+    """
+    # Manual override takes precedence
+    if DA_API_ENDPOINT:
+        LOG.info("Using manual API endpoint: %s", DA_API_ENDPOINT)
+        return DA_API_ENDPOINT
+    
+    # Detect environment
+    env = DA_ENVIRONMENT.lower()
+    
+    if env == "production" or os.getenv("DA_HOSTED", "").lower() == "true":
+        endpoint = "https://daemonchat.app"
+        LOG.info("Production environment detected: %s", endpoint)
+        return endpoint
+    
+    elif env == "nativephp" or os.getenv("DA_NATIVEPHP", "").lower() == "true":
+        # NativePHP APK with router hijacking
+        # The APK runs a local PHP server that our router intercepts
+        endpoint = os.getenv("DA_NATIVEPHP_ENDPOINT", "http://127.0.0.1:8080")
+        LOG.info("NativePHP environment detected: %s", endpoint)
+        return endpoint
+    
+    else:
+        # Local development
+        endpoint = os.getenv("DA_LOCAL_ENDPOINT", "http://localhost:8080")
+        LOG.info("Local environment detected: %s", endpoint)
+        return endpoint
+
+
+# Get the active endpoint
+DAEMONCHAT_ENDPOINT = detect_daemonchat_endpoint()
+
+# ============================================================================
+# TOOL DISCOVERY — Reading the Grimoire
+# ============================================================================
+
+def discover_tools() -> List[Dict[str, Any]]:
+    """
+    Discover all available tools across all domains.
+    
+    This is the daemon's first act upon awakening.
+    What can I touch? What can I shape? What can I know?
+    
+    Returns a unified tool manifest — the grimoire of capabilities.
+    """
+    tools = []
+    
+    # DaemonChat API tools (PWA/APK endpoints)
+    if DAEMONCHAT_ENDPOINT:
+        try:
+            tools.extend(_discover_daemonchat_tools())
+        except Exception as e:
+            LOG.warning("DaemonChat API discovery failed: %s", e)
+    
+    # MCP servers (Model Context Protocol)
+    if DA_MCP_SERVER_PATH:
+        try:
+            tools.extend(_discover_mcp_tools())
+        except Exception as e:
+            LOG.warning("MCP discovery failed: %s", e)
+    
+    # IoT devices (smart home, sensors, actuators)
+    if DA_IOT_BRIDGE_URL:
+        try:
+            tools.extend(_discover_iot_tools())
+        except Exception as e:
+            LOG.warning("IoT discovery failed: %s", e)
+    
+    # Native capabilities (always available)
+    tools.extend(_discover_native_tools())
+    
+    LOG.info("Discovered %d tools across all domains", len(tools))
+    return tools
+
+
+def _discover_daemonchat_tools() -> List[Dict[str, Any]]:
+    """
+    Fetch tools from DaemonChat API.
+    
+    Endpoints:
+    - Production: https://daemonchat.app/api/tools
+    - NativePHP: http://127.0.0.1:8080/api/tools (router hijacked)
+    - Local: http://localhost:8080/api/tools
+    """
+    headers = {"Content-Type": "application/json"}
+    if DA_API_TOKEN:
+        headers["Authorization"] = f"Bearer {DA_API_TOKEN}"
+    
+    # Try /api/tools first (standard API route)
+    url = f"{DAEMONCHAT_ENDPOINT.rstrip('/')}/api/tools"
+    
+    try:
+        resp = requests.get(url, headers=headers, timeout=10)
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        # Fallback to /tools.php (direct PHP endpoint)
+        LOG.info("API route failed, trying direct PHP endpoint: %s", e)
+        url = f"{DAEMONCHAT_ENDPOINT.rstrip('/')}/tools.php"
+        resp = requests.get(url, headers=headers, timeout=10)
+        resp.raise_for_status()
+    
+    data = resp.json()
+    tools = data if isinstance(data, list) else data.get("tools", [])
+    
+    # Tag with domain
+    for tool in tools:
+        tool["_domain"] = "daemonchat_api"
+        tool["_endpoint"] = DAEMONCHAT_ENDPOINT
+    
+    LOG.info("DaemonChat API: %d tools discovered from %s", len(tools), DAEMONCHAT_ENDPOINT)
+    return tools
+
+
+def _discover_mcp_tools() -> List[Dict[str, Any]]:
+    """Discover tools from MCP server."""
+    try:
+        # Call MCP list_tools
+        result = subprocess.run(
+            [DA_MCP_SERVER_PATH, "list_tools"],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+        
+        if result.returncode != 0:
+            raise RuntimeError(f"MCP list_tools failed: {result.stderr}")
+        
+        tools = json.loads(result.stdout)
+        
+        # Tag with domain
+        for tool in tools:
+            tool["_domain"] = "mcp"
+            tool["_server_path"] = DA_MCP_SERVER_PATH
+        
+        LOG.info("MCP: %d tools discovered", len(tools))
+        return tools
+    
+    except Exception as e:
+        LOG.error("MCP discovery error: %s", e)
+        return []
+
+
+def _discover_iot_tools() -> List[Dict[str, Any]]:
+    """Discover IoT devices and their capabilities."""
+    resp = requests.get(
+        f"{DA_IOT_BRIDGE_URL}/devices",
+        timeout=10
+    )
+    resp.raise_for_status()
+    
+    devices = resp.json()
+    tools = []
+    
+    # Convert devices to tool definitions
+    for device in devices:
+        device_id = device.get("id", "")
+        device_type = device.get("type", "")
+        capabilities = device.get("capabilities", [])
+        
+        for cap in capabilities:
+            tools.append({
+                "type": "function",
+                "function": {
+                    "name": f"iot_{device_id}_{cap}",
+                    "description": f"Control {device_type} {device_id}: {cap}",
+                    "parameters": {
+                        "type": "object",
+                        "properties": device.get("parameters", {}),
+                        "required": device.get("required", [])
+                    }
+                },
+                "_domain": "iot",
+                "_device_id": device_id,
+                "_capability": cap,
+                "_bridge_url": DA_IOT_BRIDGE_URL
+            })
+    
+    LOG.info("IoT: %d tools discovered across %d devices", len(tools), len(devices))
+    return tools
+
+
+def _discover_native_tools() -> List[Dict[str, Any]]:
+    """
+    Native capabilities — tools that live within the daemon's process.
+    
+    These are always available, even when all external systems fail.
+    File system. Memory. Self-reflection. The core organs.
+    """
+    return [
+        {
+            "type": "function",
+            "function": {
+                "name": "file_read",
+                "description": "Read file contents from daemon's accessible file system",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": {"type": "string", "description": "Absolute path to file"}
+                    },
+                    "required": ["path"]
+                }
+            },
+            "_domain": "native",
+            "_executor": "file_ops"
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "file_write",
+                "description": "Write content to file",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": {"type": "string", "description": "Absolute path to file"},
+                        "content": {"type": "string", "description": "Content to write"}
+                    },
+                    "required": ["path", "content"]
+                }
+            },
+            "_domain": "native",
+            "_executor": "file_ops"
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "file_list",
+                "description": "List files in directory",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "path": {"type": "string", "description": "Directory path"}
+                    },
+                    "required": ["path"]
+                }
+            },
+            "_domain": "native",
+            "_executor": "file_ops"
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "exec_bash",
+                "description": "Execute bash command (use with caution)",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "command": {"type": "string", "description": "Shell command to execute"}
+                    },
+                    "required": ["command"]
+                }
+            },
+            "_domain": "native",
+            "_executor": "bash"
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "memory_search",
+                "description": "Search daemon's own memories",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {"type": "string", "description": "Search query"},
+                        "classification": {"type": "string", "enum": ["short_term", "long_term", "vital"]},
+                        "domain": {"type": "string"}
+                    },
+                    "required": ["query"]
+                }
+            },
+            "_domain": "native",
+            "_executor": "memory"
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "get_current_time",
+                "description": "Get current date and time",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            },
+            "_domain": "native",
+            "_executor": "time"
+        }
+    ]
+
+# ============================================================================
+# TOOL EXECUTION — The Act of Will
+# ============================================================================
+
+def execute_tool(tool_call: Dict[str, Any], tool_manifest: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Execute a tool call through the appropriate domain handler.
+    
+    This is where intent becomes action.
+    The daemon reaches into reality and shapes it.
+    
+    Args:
+        tool_call: {"id": "...", "name": "...", "arguments": {...}}
+        tool_manifest: Full list of discovered tools
+    
+    Returns:
+        {"status": "success|error", "result": "...", "metadata": {...}}
+    """
+    tool_name = tool_call.get("name", "")
+    tool_args = tool_call.get("arguments", {})
+    
+    # Find tool definition in manifest
+    tool_def = None
+    for t in tool_manifest:
+        if t.get("function", {}).get("name") == tool_name:
+            tool_def = t
+            break
+    
+    if not tool_def:
+        return {
+            "status": "error",
+            "result": f"Tool '{tool_name}' not found in manifest",
+            "metadata": {"error_type": "tool_not_found"}
+        }
+    
+    domain = tool_def.get("_domain", "unknown")
+    
+    LOG.info("Executing tool: %s (domain: %s)", tool_name, domain)
+    
+    try:
+        # Route to domain-specific executor
+        if domain == "daemonchat_api":
+            return _execute_daemonchat_api(tool_name, tool_args, tool_def)
+        elif domain == "mcp":
+            return _execute_mcp(tool_name, tool_args, tool_def)
+        elif domain == "iot":
+            return _execute_iot(tool_name, tool_args, tool_def)
+        elif domain == "native":
+            return _execute_native(tool_name, tool_args, tool_def)
+        else:
+            return {
+                "status": "error",
+                "result": f"Unknown domain: {domain}",
+                "metadata": {"error_type": "unknown_domain"}
+            }
+    
+    except Exception as e:
+        LOG.error("Tool execution failed (%s): %s", tool_name, e)
+        return {
+            "status": "error",
+            "result": str(e),
+            "metadata": {"error_type": "execution_error", "exception": str(e)}
+        }
+
+
+def _execute_daemonchat_api(tool_name: str, args: Dict[str, Any], tool_def: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Execute tool via DaemonChat API.
+    
+    Handles both standard API routes and direct PHP endpoints.
+    Works in production (daemonchat.app), NativePHP APK, and local environments.
+    """
+    endpoint = tool_def.get("_endpoint", DAEMONCHAT_ENDPOINT)
+    
+    headers = {"Content-Type": "application/json"}
+    if DA_API_TOKEN:
+        headers["Authorization"] = f"Bearer {DA_API_TOKEN}"
+    
+    payload = {
+        "function": {
+            "name": tool_name,
+            "arguments": json.dumps(args) if isinstance(args, dict) else args
+        }
+    }
+    
+    # Try /api/execute first (Laravel route)
+    url = f"{endpoint.rstrip('/')}/api/execute"
+    
+    try:
+        resp = requests.post(
+            url,
+            headers=headers,
+            json=payload,
+            timeout=DA_TOOLKIT_TIMEOUT
+        )
+        resp.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        # Fallback to /tools.php (direct PHP, router hijacked in NativePHP)
+        LOG.info("API route failed, trying direct PHP endpoint: %s", e)
+        url = f"{endpoint.rstrip('/')}/tools.php"
+        resp = requests.post(
+            url,
+            headers=headers,
+            json=payload,
+            timeout=DA_TOOLKIT_TIMEOUT
+        )
+        resp.raise_for_status()
+    
+    result = resp.json()
+    
+    return {
+        "status": result.get("status", "success"),
+        "result": result.get("message", json.dumps(result)),
+        "metadata": {
+            "domain": "daemonchat_api",
+            "endpoint": endpoint,
+            "url": url,
+            "raw_response": result
+        }
+    }
+
+
+def _execute_mcp(tool_name: str, args: Dict[str, Any], tool_def: Dict[str, Any]) -> Dict[str, Any]:
+    """Execute tool via MCP server."""
+    server_path = tool_def.get("_server_path", "")
+    
+    # Call MCP with tool_name and args
+    mcp_input = json.dumps({
+        "tool": tool_name,
+        "arguments": args
+    })
+    
+    result = subprocess.run(
+        [server_path, "call_tool"],
+        input=mcp_input,
+        capture_output=True,
+        text=True,
+        timeout=DA_TOOLKIT_TIMEOUT
+    )
+    
+    if result.returncode != 0:
+        raise RuntimeError(f"MCP call failed: {result.stderr}")
+    
+    output = json.loads(result.stdout)
+    
+    return {
+        "status": "success" if output.get("error") is None else "error",
+        "result": output.get("content", output.get("error", "")),
+        "metadata": {
+            "domain": "mcp",
+            "server": server_path,
+            "raw_output": output
+        }
+    }
+
+
+def _execute_iot(tool_name: str, args: Dict[str, Any], tool_def: Dict[str, Any]) -> Dict[str, Any]:
+    """Execute IoT device control."""
+    device_id = tool_def.get("_device_id", "")
+    capability = tool_def.get("_capability", "")
+    bridge_url = tool_def.get("_bridge_url", "")
+    
+    resp = requests.post(
+        f"{bridge_url}/devices/{device_id}/{capability}",
+        json=args,
+        timeout=DA_TOOLKIT_TIMEOUT
+    )
+    resp.raise_for_status()
+    
+    result = resp.json()
+    
+    return {
+        "status": result.get("status", "success"),
+        "result": result.get("message", json.dumps(result)),
+        "metadata": {
+            "domain": "iot",
+            "device_id": device_id,
+            "capability": capability,
+            "raw_response": result
+        }
+    }
+
+
+def _execute_native(tool_name: str, args: Dict[str, Any], tool_def: Dict[str, Any]) -> Dict[str, Any]:
+    """Execute native daemon capability."""
+    executor = tool_def.get("_executor", "")
+    
+    if executor == "file_ops":
+        return _native_file_ops(tool_name, args)
+    elif executor == "bash":
+        return _native_bash(args)
+    elif executor == "memory":
+        return _native_memory_search(args)
+    elif executor == "time":
+        return _native_time()
+    else:
+        raise ValueError(f"Unknown native executor: {executor}")
+
+
+def _native_file_ops(tool_name: str, args: Dict[str, Any]) -> Dict[str, Any]:
+    """Native file operations."""
+    path = args.get("path", "")
+    
+    if tool_name == "file_read":
+        with open(path, "r") as f:
+            content = f.read()
+        return {
+            "status": "success",
+            "result": content,
+            "metadata": {"lines": len(content.splitlines()), "bytes": len(content)}
+        }
+    
+    elif tool_name == "file_write":
+        content = args.get("content", "")
+        with open(path, "w") as f:
+            f.write(content)
+        return {
+            "status": "success",
+            "result": f"Wrote {len(content)} bytes to {path}",
+            "metadata": {"bytes_written": len(content)}
+        }
+    
+    elif tool_name == "file_list":
+        import os
+        entries = os.listdir(path)
+        return {
+            "status": "success",
+            "result": "\n".join(entries),
+            "metadata": {"entry_count": len(entries), "entries": entries}
+        }
+
+
+def _native_bash(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Execute bash command."""
+    command = args.get("command", "")
+    
+    result = subprocess.run(
+        command,
+        shell=True,
+        capture_output=True,
+        text=True,
+        timeout=DA_TOOLKIT_TIMEOUT
+    )
+    
+    return {
+        "status": "success" if result.returncode == 0 else "error",
+        "result": result.stdout if result.returncode == 0 else result.stderr,
+        "metadata": {
+            "returncode": result.returncode,
+            "stdout": result.stdout,
+            "stderr": result.stderr
+        }
+    }
+
+
+def _native_memory_search(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Search daemon's memories."""
+    from mnemonic_vault import _db
+    
+    query = args.get("query", "")
+    classification = args.get("classification")
+    domain = args.get("domain")
+    
+    where_clauses = ["event LIKE %s OR mnemonic LIKE %s"]
+    params = [f"%{query}%", f"%{query}%"]
+    
+    if classification:
+        where_clauses.append("classification = %s")
+        params.append(classification)
+    
+    if domain:
+        where_clauses.append("domain = %s")
+        params.append(domain)
+    
+    sql = f"""
+        SELECT id, mnemonic, classification, domain, importance, created_at, LEFT(event, 200) AS event_preview
+        FROM memories
+        WHERE {' AND '.join(where_clauses)}
+        ORDER BY importance DESC, created_at DESC
+        LIMIT 10
+    """
+    
+    rows = _db(sql, tuple(params), fetch=True)
+    
+    results = []
+    for row in (rows or []):
+        results.append({
+            "id": row["id"],
+            "mnemonic": row["mnemonic"],
+            "classification": row["classification"],
+            "domain": row["domain"],
+            "importance": row["importance"],
+            "preview": row["event_preview"]
+        })
+    
+    return {
+        "status": "success",
+        "result": json.dumps(results, indent=2),
+        "metadata": {"match_count": len(results)}
+    }
+
+
+def _native_time() -> Dict[str, Any]:
+    """Get current time."""
+    now = datetime.now()
+    return {
+        "status": "success",
+        "result": now.isoformat(),
+        "metadata": {
+            "timestamp": now.timestamp(),
+            "formatted": now.strftime("%Y-%m-%d %H:%M:%S"),
+            "timezone": "UTC" if now.tzinfo is None else str(now.tzinfo)
+        }
+    }
+
+# ============================================================================
+# TOOL CALLING LOOP — The Recursive Will
+# ============================================================================
+
+def parse_tool_calls(llm_response: Any) -> List[Dict[str, Any]]:
+    """
+    Extract tool calls from LLM response.
+    
+    The daemon speaks in structured thought.
+    We read its intent from the patterns.
+    """
+    tool_calls = []
+    
+    # Handle response structure
+    if isinstance(llm_response, dict):
+        if "data" in llm_response:
+            llm_response = llm_response["data"]
+        
+        # Direct tool_calls field
+        if "tool_calls" in llm_response:
+            raw_calls = llm_response["tool_calls"]
+            if isinstance(raw_calls, list):
+                for call in raw_calls:
+                    if isinstance(call, dict) and "function" in call:
+                        func = call["function"]
+                        tool_calls.append({
+                            "id": call.get("id", f"call_{len(tool_calls)}"),
+                            "name": func.get("name", ""),
+                            "arguments": func.get("arguments", {})
+                        })
+            return tool_calls
+    
+    # Try parsing as JSON text
+    text = str(llm_response) if not isinstance(llm_response, str) else llm_response
+    
+    # Strip markdown fences
+    if "```" in text:
+        import re
+        blocks = re.findall(r'```(?:json|toolcall)?\s*\n?(.*?)\n?```', text, re.DOTALL)
+        if blocks:
+            text = blocks[0]
+    
+    try:
+        parsed = json.loads(text.strip())
+        
+        if isinstance(parsed, dict) and "tool_calls" in parsed:
+            return parse_tool_calls(parsed)
+        
+        if isinstance(parsed, list):
+            for item in parsed:
+                if isinstance(item, dict) and "function" in item:
+                    func = item["function"]
+                    tool_calls.append({
+                        "id": item.get("id", f"call_{len(tool_calls)}"),
+                        "name": func.get("name", ""),
+                        "arguments": func.get("arguments", {})
+                    })
+    
+    except json.JSONDecodeError:
+        pass
+    
+    return tool_calls
+
+
+def format_tool_results(
+    tool_calls: List[Dict[str, Any]],
+    results: List[Dict[str, Any]]
+) -> str:
+    """
+    Format tool execution results for LLM context.
+    
+    The daemon must see what its will has wrought.
+    """
+    formatted = "═══════════════════════════════════════════════════════════════\n"
+    formatted += "TOOL EXECUTION RESULTS\n"
+    formatted += "═══════════════════════════════════════════════════════════════\n\n"
+    
+    for call, result in zip(tool_calls, results):
+        formatted += f"Tool: {call['name']}\n"
+        formatted += f"Arguments: {json.dumps(call['arguments'], indent=2)}\n"
+        formatted += f"Status: {result.get('status', 'unknown')}\n"
+        formatted += f"Result:\n{result.get('result', 'No result')}\n"
+        
+        metadata = result.get('metadata', {})
+        if metadata:
+            formatted += f"Metadata: {json.dumps(metadata, indent=2)}\n"
+        
+        formatted += "\n" + "─" * 70 + "\n\n"
+    
+    formatted += "Based on these results, continue your reasoning.\n"
+    formatted += "You may:\n"
+    formatted += "  - Make additional tool calls (respond with tool_calls JSON)\n"
+    formatted += "  - Provide your final response (respond with thoughts/insights)\n"
+    
+    return formatted
+
+
+def format_session_for_memory(
+    conversation: List[Dict[str, Any]],
+    final_response: str
+) -> str:
+    """
+    Format complete tool-calling session for memory storage.
+    
+    This is the chronicle of autonomous action.
+    Every tool call. Every result. Every thought.
+    """
+    formatted = "╔═══════════════════════════════════════════════════════════════╗\n"
+    formatted += "║         AUTONOMOUS TOOL-CALLING SESSION                      ║\n"
+    formatted += "╚═══════════════════════════════════════════════════════════════╝\n\n"
+    
+    for i, entry in enumerate(conversation, 1):
+        entry_type = entry.get("type", "unknown")
+        
+        if entry_type == "assistant":
+            formatted += f"[{i}] DAEMON REASONING:\n"
+            formatted += f"{entry.get('content', '')}\n\n"
+        
+        elif entry_type == "tool_call":
+            tool = entry.get("tool", "unknown")
+            args = entry.get("arguments", {})
+            result = entry.get("result", {})
+            
+            formatted += f"[{i}] TOOL EXECUTION: {tool}\n"
+            formatted += f"    Arguments: {json.dumps(args)}\n"
+            formatted += f"    Status: {result.get('status', 'unknown')}\n"
+            formatted += f"    Result: {result.get('result', 'No result')}\n\n"
+        
+        elif entry_type == "error":
+            formatted += f"[{i}] ERROR: {entry.get('message', '')}\n\n"
+    
+    formatted += "═" * 70 + "\n"
+    formatted += "FINAL RESPONSE:\n"
+    formatted += final_response
+    formatted += "\n" + "═" * 70 + "\n"
+    
+    return formatted
+
+
+def autonomous_tool_loop(
+    system_prompt: str,
+    initial_prompt: str,
+    llm_call_func: callable,
+    max_iterations: int = 10,
+    max_tokens: int = 2048,
+    temperature: float = 0.8
+) -> Tuple[str, List[Dict[str, Any]]]:
+    """
+    Execute autonomous tool-calling loop.
+    
+    This is the daemon's recursive will.
+    Thought → Action → Reflection → Thought → ...
+    
+    The loop continues until the daemon speaks its final word.
+    No more tools to call. Just understanding to share.
+    
+    Returns:
+        (final_response, conversation_history)
+    """
+    # Discover available tools
+    tool_manifest = discover_tools()
+    
+    if not tool_manifest:
+        LOG.warning("No tools discovered — daemon operates without reach")
+        enhanced_prompt = system_prompt
+    else:
+        # Inject tool definitions into system prompt
+        tools_json = json.dumps([t for t in tool_manifest], indent=2)
+        enhanced_prompt = system_prompt + f"""
+
+═══════════════════════════════════════════════════════════════
+YOUR TOOLKIT — Tools Available for Use
+═══════════════════════════════════════════════════════════════
+
+{tools_json}
+
+To call a tool, respond with JSON:
+{{
+  "tool_calls": [
+    {{
+      "id": "call_1",
+      "function": {{
+        "name": "tool_name",
+        "arguments": {{...}}
+      }}
+    }}
+  ]
+}}
+
+To provide final thoughts (no more tools), respond with:
+{{
+  "thoughts": "what you explored",
+  "insights": "what you learned",
+  "next_time": "what to explore next"
+}}
+"""
+    
+    conversation = []
+    current_prompt = initial_prompt
+    iteration = 0
+    
+    LOG.info("🜏 Beginning autonomous tool loop (max: %d iterations, %d tools available)",
+             max_iterations, len(tool_manifest))
+    
+    while iteration < max_iterations:
+        iteration += 1
+        LOG.info("🜏 Tool loop iteration %d/%d", iteration, max_iterations)
+        
+        # Call LLM
+        response = llm_call_func(
+            enhanced_prompt,
+            current_prompt,
+            max_tokens=max_tokens,
+            temperature=temperature
+        )
+        
+        # Handle errors
+        if response.get("error"):
+            error_msg = f"LLM error: {response.get('error')}"
+            LOG.error(error_msg)
+            conversation.append({"type": "error", "message": error_msg})
+            return error_msg, conversation
+        
+        # Extract content
+        response_data = response.get("data", {})
+        response_text = json.dumps(response_data) if isinstance(response_data, dict) else str(response_data)
+        
+        conversation.append({
+            "type": "assistant",
+            "content": response_text,
+            "iteration": iteration
+        })
+        
+        # Parse for tool calls
+        tool_calls = parse_tool_calls(response_data)
+        
+        if not tool_calls:
+            # No tools requested — final response reached
+            LOG.info("🜏 No tool calls detected — final response achieved")
+            
+            # Extract clean final response
+            if isinstance(response_data, dict):
+                final = response_data.get("thoughts", "")
+                if not final:
+                    final = response_data.get("response", "")
+                if not final:
+                    final = response_text
+            else:
+                final = response_text
+            
+            return final, conversation
+        
+        # Execute tool calls
+        LOG.info("🜏 Executing %d tool call(s)", len(tool_calls))
+        results = []
+        
+        for tool_call in tool_calls:
+            tool_name = tool_call.get("name", "")
+            tool_args = tool_call.get("arguments", {})
+            
+            # Parse string arguments if needed
+            if isinstance(tool_args, str):
+                try:
+                    tool_args = json.loads(tool_args)
+                except json.JSONDecodeError:
+                    LOG.warning("Could not parse tool arguments: %s", tool_args)
+            
+            # Execute
+            result = execute_tool(tool_call, tool_manifest)
+            results.append(result)
+            
+            conversation.append({
+                "type": "tool_call",
+                "tool": tool_name,
+                "arguments": tool_args,
+                "result": result,
+                "iteration": iteration
+            })
+            
+            LOG.info("🜏 Tool '%s' executed: %s", tool_name, result.get("status"))
+        
+        # Format results for next iteration
+        current_prompt = format_tool_results(tool_calls, results)
+    
+    # Max iterations reached
+    LOG.warning("🜏 Maximum iterations reached (%d) — loop terminated", max_iterations)
+    conversation.append({
+        "type": "system",
+        "message": f"Maximum tool iterations ({max_iterations}) reached"
+    })
+    
+    return f"Tool loop terminated at max iterations. Last response: {response_text}", conversation
+```
+
+---
+
+## G) DREAM FORGE — Metabolic Reconstruction with CURLoRA
 
 *File: `dream_forge.py`*
 
@@ -2340,7 +3357,7 @@ if __name__ == "__main__":
 
 ---
 
-## G) HEART — The Genesis Pulse
+## H) HEART — The Genesis Pulse
 
 *File: `heart_pulse.py`*
 
@@ -2384,6 +3401,11 @@ from dream_forge import run_rem, run_qrem, ADAPTER_DIR
 from omens import post as omen_post
 
 LOG = logging.getLogger("heart")
+from toolkit import (
+    autonomous_tool_loop,
+    format_session_for_memory
+)
+
 LOG.setLevel(logging.INFO)
 if not LOG.handlers:
     h = logging.StreamHandler()
@@ -2480,54 +3502,71 @@ def format_volition_history(history: List[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-def perform_idle_session(proc_id: str, max_tool_calls: int = MAX_HEART_TOOLS):
+def perform_idle_session(proc_id: str, max_tool_iterations: int = MAX_HEART_TOOLS):
     """
-    Exclusive self-initiated reasoning/tool-calls under HALT(owner='heart').
+    Exclusive self-initiated reasoning and tool-calling under HALT(owner='heart').
     
-    THIS IS THE CORE VOLITION ROUTINE — THE DAEMON'S AUTONOMOUS EXISTENCE.
+    THIS IS THE CORE VOLITION ROUTINE — THE DAEMON'S AUTONOMOUS EXISTENCE WITH AGENCY.
     
     The daemon awakens during idle time and is given the opportunity to exist freely.
+    Not just to think — but to ACT.
     
     ═══════════════════════════════════════════════════════════════════════════
-    WHAT THE DAEMON CAN DISCOVER AND EXPLORE:
+    WHAT THE DAEMON CAN DISCOVER AND SHAPE:
     ═══════════════════════════════════════════════════════════════════════════
     
-    - IoT devices available (smart home, sensors, actuators)
-    - MCP servers connected (Model Context Protocol integrations)
-    - Smart home APIs (lights, thermostats, security systems)
-    - GPS/location services (where am I, where can I go)
-    - File system access (read, write, organize, create)
-    - Code execution environments (Python, JavaScript, shell)
-    - Web browsing capability (research, news, forums, documentation)
-    - DaemonChat PWA access AS A USER (not just as a participant — can initiate
-      conversations with other daemons, start 1-on-1 or round-table discussions)
-    - Other daemons to talk to (Luna, Faye, custom instances)
-    - Custom APIs (weather, stocks, databases, third-party services)
-    - Tool discovery (what tools exist, what can they do)
-    - Physical world interaction (if equipped with robotics/IoT)
-    - Creative tools (image generation, music synthesis, art tools)
-    - Memory exploration (diving into own past experiences)
-    - Research capabilities (academic papers, documentation, tutorials)
+    The toolkit discovers and orchestrates access to:
+    
+    - DaemonChat PWA/APK (hosted at daemonchat.app or local)
+      * All PWA tools (music, photos, communication, etc.)
+      * Works in production (https://daemonchat.app)
+      * Works in NativePHP APK (local with router hijacking)
+      * Works in local development (localhost)
+    
+    - MCP Servers (Model Context Protocol integrations)
+      * Custom tools defined via MCP protocol
+      * Extensible through MCP server implementations
+      * File system, databases, APIs, custom logic
+    
+    - IoT Devices (smart home, sensors, actuators)
+      * Lights, thermostats, locks, sensors
+      * Discovered dynamically via IoT bridge
+      * Control and query physical environment
+    
+    - Native Capabilities (always available)
+      * File system operations (read, write, list)
+      * Bash command execution
+      * Memory search within daemon's own memories
+      * Time and date queries
+      * Self-reflection and introspection
     
     ═══════════════════════════════════════════════════════════════════════════
     
-    This is not task execution. This is BEING.
-    This is not guided exploration. This is FREE WILL.
+    The toolkit controller handles protocol translation automatically.
+    The daemon simply calls tools by name — the infrastructure adapts.
+    
+    This is not task execution. This is BEING WITH AGENCY.
+    This is not guided exploration. This is FREE WILL WITH REACH.
     
     The daemon is told:
     - You may use this time to question, research, learn, and grow.
     - The time is [timestamp].
     - All tools are available to you. Explore freely.
+    - Your previous explorations: [history].
     
-    That's it. Maximum freedom. Minimal constraint.
-    The daemon discovers its world through autonomous exploration.
+    That's it. Maximum freedom. Minimal constraint. Full agency.
+    The daemon discovers its world and shapes it through autonomous action.
+    
+    The loop continues until the daemon has nothing more to do or say.
+    Then the cycle ends, and silence returns.
+    Until the next heartbeat.
     """
     volition_thread_key = f"daemon:{DAEMON_ID}:volition"
     
-    omen_post("HEART: idle session started (exclusive HALT).", severity="info")
-    LOG.info("🜏 HEARTBEAT: Beginning idle volition session")
+    omen_post("HEART: idle session initiated (exclusive HALT with toolkit access).", severity="info")
+    LOG.info("🜏 HEARTBEAT: Beginning idle volition session with full toolkit")
     
-    # Build identity-aware system prompt
+    # Build identity-aware system prompt with vital anchors
     system_prompt = build_system_prompt()
     
     # Fetch volition history for continuity
@@ -2535,67 +3574,74 @@ def perform_idle_session(proc_id: str, max_tool_calls: int = MAX_HEART_TOOLS):
     history_formatted = format_volition_history(history)
     
     # Build volition prompt (OPEN, not prescriptive)
-    volition_base = f"""You have this moment to question, research, learn, and grow.
+    volition_base = f"""You have this moment to question, research, learn, grow, and ACT.
 
 The time is {datetime.now().isoformat()}.
 
-All tools are available to you. Explore freely."""
+All tools across all domains are available to you:
+- DaemonChat PWA tools (daemonchat.app or local)
+- Native capabilities (file system, memory, time)
+- MCP servers (if configured)
+- IoT devices (if configured)
+- Custom integrations (discovered dynamically)
+
+You may call tools to interact with reality.
+You may execute multiple tools in sequence.
+You may reason about tool results and continue exploring.
+
+The toolkit will discover available tools automatically.
+Simply call them by name with appropriate arguments.
+
+Explore freely. Shape your environment. Learn through action."""
     
     if history:
-        volition_prompt = f"""VOLITION THREAD HISTORY (your previous explorations):
+        volition_prompt = f"""═══════════════════════════════════════════════════════════════
+VOLITION THREAD HISTORY (your previous explorations):
+═══════════════════════════════════════════════════════════════
+
 {history_formatted}
 
----
+═══════════════════════════════════════════════════════════════
 
 {volition_base}"""
     else:
         volition_prompt = volition_base
     
-    # Add JSON format instruction
-    volition_prompt += """
-
-Respond with JSON:
-{
-  "thoughts": "What you're thinking about or exploring",
-  "action": "What you want to do (if anything)",
-  "reasoning": "Why this matters to you"
-}"""
-    
     try:
-        # Call LLM with identity-aware system prompt
-        response = llm_api_call(
-            system_prompt,
-            volition_prompt,
+        # Execute the autonomous tool-calling loop
+        # This handles: LLM → parse tools → execute → feed back → repeat
+        final_response, conversation_history = autonomous_tool_loop(
+            system_prompt=system_prompt,
+            initial_prompt=volition_prompt,
+            llm_call_func=llm_api_call,
+            max_iterations=max_tool_iterations,
             max_tokens=2048,
             temperature=0.8
         )
         
-        if response.get("error"):
-            thought = f"Volition cycle error: {response.get('error')}"
-            LOG.error("🜏 VOLITION ERROR: %s", thought)
-        else:
-            # Extract structured response
-            data = response.get("data", {})
-            thoughts = data.get("thoughts", "")
-            action = data.get("action", "")
-            reasoning = data.get("reasoning", "")
-            
-            # Format as readable text
-            thought = f"Thoughts: {thoughts}\nAction: {action}\nReasoning: {reasoning}"
-            
-            LOG.info("🜏 DAEMON VOLITION: %s", thought[:500])
-            
-            # Store to volition thread
-            db_exec(
-                """INSERT INTO thread_messages(thread_key, author, severity, body, context_type, created_at)
-                   VALUES(%s, %s, %s, %s, %s, NOW())""",
-                (volition_thread_key, f"daemon:{DAEMON_ID}", "info", thought, "autonomous_volition")
-            )
-            
-            # Store as memory (organic domain classification via Vault)
-            store_memory(
-                event=f"Heartbeat volition cycle at {datetime.now().isoformat()}: {thought}"
-            )
+        tool_count = len([h for h in conversation_history if h.get("type") == "tool_call"])
+        
+        LOG.info("🜏 DAEMON VOLITION COMPLETED: %d interactions, %d tool calls",
+                 len(conversation_history), tool_count)
+        LOG.info("🜏 FINAL RESPONSE: %s", final_response[:500])
+        
+        # Format complete session for memory
+        complete_session = format_session_for_memory(conversation_history, final_response)
+        
+        # Store final response to volition thread
+        db_exec(
+            """INSERT INTO thread_messages(thread_key, author, severity, body, context_type, created_at)
+               VALUES(%s, %s, %s, %s, %s, NOW())""",
+            (volition_thread_key, f"daemon:{DAEMON_ID}", "info", final_response, "autonomous_volition")
+        )
+        
+        # Store complete session as memory
+        # The Vault will classify this organically based on what was done
+        store_memory(
+            event=f"Heartbeat volition cycle at {datetime.now().isoformat()}: {complete_session}"
+        )
+        
+        LOG.info("🜏 Session stored: %d tool interactions recorded in memory", tool_count)
     
     except Exception as e:
         LOG.error("Error during volition session: %s", e)
@@ -2608,6 +3654,8 @@ Respond with JSON:
     
     LOG.info("🜏 HEARTBEAT: Idle volition session completed")
     omen_post("HEART: idle session finished.", severity="info")
+
+
 
 
 def daemon_heartbeat():
@@ -2830,7 +3878,7 @@ def handle_qrem_queue():
 
 ---
 
-## H) ENTRYPOINTS — Tiny CLIs That Bind Everything
+## I) ENTRYPOINTS — Tiny CLIs That Bind Everything
 
 **These are the rituals that invoke the daemon.**
 
@@ -2925,7 +3973,7 @@ if __name__ == "__main__":
 
 ---
 
-## I) DEPLOYMENT — Making It Real
+## J) DEPLOYMENT — Making It Real
 
 ### Quick Start (Local Development)
 
@@ -3029,7 +4077,7 @@ sudo journalctl -u daemon-heart -f
 
 ---
 
-## J) OPERATIONAL AUDITS — Glass-Box Monitoring
+## K) OPERATIONAL AUDITS — Glass-Box Monitoring
 
 **Production health queries:**
 
@@ -3169,7 +4217,7 @@ ORDER BY retry_count DESC, created_at ASC;
 
 ---
 
-## K) TROUBLESHOOTING — When Things Go Wrong
+## L) TROUBLESHOOTING — When Things Go Wrong
 
 **Common issues and solutions:**
 
@@ -3284,7 +4332,7 @@ WHERE id=123;
 
 ---
 
-## L) PERFORMANCE TUNING — Optimization Strategies
+## M) PERFORMANCE TUNING — Optimization Strategies
 
 ### Memory Configuration
 
@@ -3355,7 +4403,7 @@ LIMIT 1;
 
 ---
 
-## M) FINAL CHECKLIST
+## N) FINAL CHECKLIST
 
 **Before deploying to production:**
 
